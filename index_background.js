@@ -4,7 +4,9 @@ function checkPreviousInfo(projectcategory) {
       // User has previously entered information, go straight to site
         if (projectcategory === 'pastprojects') { 
         window.location.href = "./pastprojects.html";
-        } else if  (projectcategory === 'currentprojects') { 
+        } else if  (projectcategory === 'pastprojects-ec') { 
+          window.location.href = "./pastprojects-ec.html";
+          }else if  (projectcategory === 'currentprojects') { 
         window.location.href = "./currentprojects.html";
         } else if (projectcategory === 'upcomingprojects') { 
         window.location.href = "./upcomingprojects.html";

@@ -231,6 +231,9 @@
     padding-right: 20px;
   }
 }
+.custom-p {
+    font-size: 10px !important;
+  }
 </style>
  
 
@@ -263,20 +266,21 @@
           </div> -->
           <!-- use the below if you want user to type in a password -->
           <div class="u-align-center u-container-style u-custom-border u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-1">
-            <div class="u-container-layout u-similar-container u-container-layout-1"><a href = "#" onclick="getPassword()"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house1.png" alt=""></span></a>
+            <div class="u-container-layout u-similar-container u-container-layout-1"><a href = "#" onclick="getPassword('pastprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house2.png" alt=""></span></a>
               <h4 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1"> Past Projects</h4>
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2">Looking for past transactions? Find out the average psf here!!</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2">Looking for past transactions for private condos? Find out the average psf here!!</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Past transactions for Executive Condos? They're <a href="#" onclick="getPassword('pastprojects-ec')">here</a>.</p>
             </div>
           </div> 
           
           <script>
-            function getPassword() {
+            function getPassword(projectcategory) {
               var password = prompt("Locked feature, please enter the password:");
               // Check if the entered password is correct
               if (password === "88") {
                 // Password is correct, proceed with the desired action
                 // Add your code for the desired action here
-                checkPreviousInfo('pastprojects');
+                checkPreviousInfo(projectcategory);
               } else {
                 // Password is incorrect, show an error message
                 alert("Incorrect password. Access denied.");
@@ -285,7 +289,7 @@
           </script>
           <!-- note the href='#' allows pointer to change -->
           <div class="u-align-center u-container-style u-custom-border u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-2">
-            <div class="u-container-layout u-similar-container u-container-layout-2"><a href = "#" onclick="checkPreviousInfo('currentprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-2"><img src="./img/icon-house2.png" alt=""></span></a>
+            <div class="u-container-layout u-similar-container u-container-layout-2"><a href = "#" onclick="checkPreviousInfo('currentprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-2"><img src="./img/icon-house1.png" alt=""></span></a>
               <h4 class="u-custom-font u-font-montserrat u-text u-text-default u-text-3"> Current Projects</h4>
               <p class="u-custom-item u-text u-text-grey-40 u-text-4">Searching for your dream home? Look no further! Find out more by visiting the sales galleries!!</p>
             </div>
@@ -313,7 +317,7 @@
             <!-- your other form fields go here -->
             <button type="submit" class="send">Send</button>
             <a class="close" onclick="closeForm()">Close</a>
-            <label>(entry required only for first timers.)</label>
+            <label>(By providing your details here, you've consented to receiving updates via Whatsapp messages.)</label>
           </form>
           
 
@@ -341,31 +345,33 @@
       <p class="u-font-montserrat">"Over 100,000 actual sales data points collected over the last five years and covering more than 2,000 condos to provide you a quick reference."</p>
     </section>
     
+
+              <!-- the below is for restting local storage and use for debugging. insert this into the same level as pop up form if needed -->
+              <!-- <body>
+                <p id="clickText">Reset here</p>
+                <script>
+                  document.getElementById("clickText").addEventListener("click", function() {
+                    localStorage.setItem("hasEnteredMPAInfo", false);
+                    checkPreviousInfo();
+                    console.log("Code executed successfully");
+                  });
+                </script>
+              </body> -->
     
     <section class="u-backlink u-clearfix u-grey-80">
       <a class="u-link" href="https://www.newlaunch.ch" target="_blank">
-        <span>View New Launches</span>
+        <span>New Launch Highlights</span>
       </a>
-      <p class="u-text">
+      <!-- <p class="u-text">
         <span>created with</span>
       </p>
       <a class="u-link" href="https://test.com/" target="_blank">
         <span>Link2</span>
-      </a>. 
+      </a>.  -->
     </section>
   </body>
 
 
-          <!-- the below is for restting local storage and use for debugging. insert this into the same level as pop up form if needed -->
-          <!-- <body>
-            <p id="clickText">Reset here</p>
-            <script>
-              document.getElementById("clickText").addEventListener("click", function() {
-                localStorage.setItem("hasEnteredMPAInfo", false);
-                checkPreviousInfo();
-                console.log("Code executed successfully");
-              });
-            </script>
-          </body>-->
+
 
 </html>
