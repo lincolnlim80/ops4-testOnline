@@ -256,21 +256,33 @@ if (ip_check3 == "1") {
           var ltvcheck = 75;
           ip_cashpc = 5;
           ip_cpfpc = 20;
-              if (Number(ip_remainlease) <= 40){
-                ltvcheck = 60;
-                ip_cashpc = 5;
-                ip_cpfpc = 35;
+          if (ip_numprop === "1#") {
+                if (Number(ip_remainlease) <= 40){
+                    ltvcheck = 60;
+                    ip_cashpc = 5;
+                    ip_cpfpc = 35;
+                    }
+            ip_LTV = ltvcheck;
+            $LTV_rangeslider.val(ip_LTV).change();
+            $LTV_amount[0].value = ip_LTV;
+            var tenurecheck = Math.min(65-ip_Age , 25);
+                if (ip_check2 == "1") {
+                tenurecheck = Math.min(75-ip_Age , 30 - ip_firstloanyr);
                 }
-          ip_LTV = ltvcheck;
-          $LTV_rangeslider.val(ip_LTV).change();
-          $LTV_amount[0].value = ip_LTV;
-          var tenurecheck = Math.min(65-ip_Age , 25);
-              if (ip_check2 == "1") {
-              tenurecheck = Math.min(75-ip_Age , 30 - ip_firstloanyr);
-              }
-          ip_Tenure = tenurecheck;
-          $Tenure_rangeslider.val(ip_Tenure).change();
-          $Tenure_amount[0].value = ip_Tenure;
+            ip_Tenure = tenurecheck;
+            $Tenure_rangeslider.val(ip_Tenure).change();
+            $Tenure_amount[0].value = ip_Tenure;
+            } else if (ip_numprop === "2#") {
+                alert("Must dispose HDB first.");
+                ip_numprop = "1#";
+                $numprop_rangeslider.val(1).change();
+                $("#textnumprop").html("<strong>" + ip_numprop + "</strong>");
+            } else if (ip_numprop === ">2#") {
+                alert("Must dispose HDB first.");
+                ip_numprop = "1#";
+                $numprop_rangeslider.val(1).change();
+                $("#textnumprop").html("<strong>" + ip_numprop + "</strong>");
+            }
         } else if (ip_facility == "HDB - HDB Loan") {
           ip_LTV = "80";
           ip_cashpc = 5;
@@ -281,7 +293,7 @@ if (ip_check3 == "1") {
           if (ip_check2 == "1") {
               alert("HDB loan does not offer refinance");
             // Uncheck
-document.getElementById('check2').checked = false;
+            document.getElementById('check2').checked = false;
             ip_check2 = "0";
           }
           ip_Tenure = tenurecheck;
