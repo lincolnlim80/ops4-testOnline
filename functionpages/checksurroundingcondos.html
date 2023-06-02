@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Places of Interest</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsp-ZqZhw7s0nFt77pcUG5LjNnQIyzmM&libraries=places"></script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div><label for="lat">Latitude:</label><input type="text" id="lat" style="margin-left: 110px;"></div>
+  <div><label for="lng">Longitude:</label><input type="text" id="lng" style="margin-left: 90px;"></div>
+  <div><label for="object">Place of Interest:</label><input type="text" id="object" style="margin-left: 30px;"></div>
+  <div><label for="radius">Radius (in meters):</label><input type="text" id="radius" style="margin-left: 10px;"></div>
+  <br>
+  <button onclick="searchPlaces()">Search</button>
+  <br>
+  <br>
+  <br>
+  <div id="map"></div>
+  <div id="results"></div>
+
+  <script>
+      var map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 0, lng: 0},
+          zoom: 15
+        });
+      }
+
+    function searchPlaces() {
+      var lat = document.getElementById('lat').value;
+      var lng = document.getElementById('lng').value;
+      var object = document.getElementById('object').value;
+      var radius = document.getElementById('radius').value;
+      
+
+      var location = new google.maps.LatLng(lat, lng);
+      map.setCenter(location);
+
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map
+      });
+
+      var request = {
+        location: location,
+        radius: radius,
+        keyword: object
+      };
+
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, callback);
+    }
+
+    function callback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        var resultList = document.createElement('ul');
+        for (var i = 0; i < results.length; i++) {
+          var place = results[i];
+          var listItem = document.createElement('li');
+          listItem.textContent = place.name;
+          resultList.appendChild(listItem);
+        }
+        document.getElementById('results').innerHTML = '';
+        document.getElementById('results').appendChild(resultList);
+      }
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsp-ZqZhw7s0nFt77pcUG5LjNnQIyzmM&libraries=places&callback=initMap"></script>
+</body>
+</html>
