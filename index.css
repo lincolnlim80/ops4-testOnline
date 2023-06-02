@@ -8910,3 +8910,8 @@ textarea {
 button {
   width: 100%;
 }
+
+
+#coordinatesForm {
+  display: none;
+}
