@@ -2,7 +2,7 @@
 // Function to fetch the CSV data
 let dataArray = [];
 async function fetchCSVData() {
-  const response = await fetch('./rsc/pastprojectsdata-ec.csv');
+  const response = await fetch('./rsc/pastprojectsdata-landed.csv');
   const csvData = await response.text();
   dataArray = csvData
     .split('\n')

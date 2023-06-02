@@ -8,7 +8,7 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, category, top, psf1, psf2, notes, link, psf1_max, psf2_max, psf1_avg, psf2_avg]) => ({
+    .map(([name, category, top, psf1, psf2, notes, link, psf1_max, psf2_max, psf1_avg, psf2_avg, psf1_new, psf2_new]) => ({
       name,
       category,
       top,
@@ -20,6 +20,8 @@ async function fetchCSVData() {
       psf2_max,
       psf1_avg,
       psf2_avg,
+      psf1_new,
+      psf2_new,
       psf1_last: psf1,
       psf2_last: psf2
     }));
@@ -194,12 +196,22 @@ clearIcon.addEventListener("click", clearSearchInput);
 
 
 // Get the button elements
-var lastTransactedButton = document.getElementById("LastTransacted");
+var lastNewSaleButton = document.getElementById("LastNewSale");
+var lastResaleButton = document.getElementById("LastResale");
 var maxValueButton = document.getElementById("MaxValue");
 var averageHalfYearButton = document.getElementById("AverageHalfYear");
 
 // Add event listeners to the buttons
-lastTransactedButton.addEventListener("click", function() {
+lastNewSaleButton.addEventListener("click", function() {
+  // Code to execute when the Last Transacted button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_new;
+    item.psf2 = item.psf2_new;
+  });
+  displayData(filteredData);
+});
+
+lastResaleButton.addEventListener("click", function() {
   // Code to execute when the Last Transacted button is clicked
   filteredData.forEach((item) => {
     item.psf1 = item.psf1_last;

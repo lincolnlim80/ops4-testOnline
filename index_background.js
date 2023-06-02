@@ -6,7 +6,13 @@ function checkPreviousInfo(projectcategory) {
         window.location.href = "./pastprojects.html";
         } else if  (projectcategory === 'pastprojects-ec') { 
           window.location.href = "./pastprojects-ec.html";
-          }else if  (projectcategory === 'currentprojects') { 
+        } else if  (projectcategory === 'pastprojects-stratalanded') { 
+          window.location.href = "./pastprojects-stratalanded.html";
+        } else if  (projectcategory === 'pastprojects-landed') { 
+          window.location.href = "./pastprojects-landed.html";
+        } else if  (projectcategory === 'pastprojects-enbloc') { 
+          window.location.href = "./pastprojects-enbloc.html";
+        } else if  (projectcategory === 'currentprojects') { 
         window.location.href = "./currentprojects.html";
         } else if (projectcategory === 'upcomingprojects') { 
         window.location.href = "./upcomingprojects.html";
