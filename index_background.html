@@ -274,10 +274,9 @@
               <p class="u-custom-item u-text u-text-grey-40 u-text-2">Looking for past transactions for private condos? Find out the average psf here!!</p>
               <p></p>
               <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Past transactions for others?</p> 
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Executive Condos: <a href="#" onclick="getPassword('pastprojects-ec')">here</a>.</p>
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Strata Landed: <a href="#" onclick="getPassword('pastprojects-stratalanded')">here</a>.</p>
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Landed: <a href="#" onclick="getPassword('pastprojects-landed')">here</a>.</p>
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">En-Blocs: <a href="#" onclick="getPassword('pastprojects-enbloc')">here</a>.</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#" onclick="getPassword('pastprojects-ec')">Executive Condos</a>.</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#" onclick="getPassword('pastprojects-stratalanded')">Strata Landed</a>.</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#" onclick="getPassword('pastprojects-landed')">Landed</a>.</p>
             </div>
           </div> 
           
@@ -306,6 +305,11 @@
             <div class="u-container-layout u-similar-container u-container-layout-3"><a href = "#" onclick="checkPreviousInfo('upcomingprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-3" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house3.png" alt=""></span></a>
               <h4 class="u-custom-font u-font-montserrat u-text u-text-default u-text-5"> Upcoming Projects</h4>
               <p class="u-custom-item u-text u-text-grey-40 u-text-6">Investment interest? Find out the upcoming projects here!!</p>
+            <p></p>
+            <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Past releases for others?</p> 
+            <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="./upcomingprojects-enbloc.html">En-Blocs</a>.</p>
+            <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="/upcomingprojects-gls.html">GLS</a>. Latest on <a href="https://www.ura.gov.sg/Corporate/Land-Sales/Sites-For-Tender">ura_gls</a>  /  <a href="https://www.ura.gov.sg/Corporate/Land-Sales/Sites-For-Tender">hdb_ec</a></p>
+            <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#">Other Acqusitions</a>.</p>
             </div>
           </div>
         </div>
@@ -316,11 +320,11 @@
         <div id="popupForm" class="popup">
           <!-- this formspree works -->
           <form onsubmit="submitForm(event)" action="https://formspree.io/f/xzbqqkjd" method="POST">
-            <label for="name">Your Name:</label>
+            <label fid="name">Your Name:</label>
             <input type="text" name="name" required>
-            <label for="mobile">Your Mobile Number:</label>
+            <label id="mobile">Your Mobile Number:</label>
             <input type="tel" name="mobile" required>
-            <label for="email">Your Email:</label>
+            <label id="email">Your Email:</label>
             <input type="email" name="email">
             <!-- your other form fields go here -->
             <button type="submit" class="send">Send</button>

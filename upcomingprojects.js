@@ -8,16 +8,25 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, category, top, numunits, tenure, preview, booking, notes, link]) => ({
+    .map(([name, zone, category, tenderdate, type, use, tenure, landsize, gfa, top, glslink, dev, landprice, psf_gfa, numunits, notes, devlink, projlink]) => ({
       name,
+      zone,
       category,
-      top,
-      numunits,
+      tenderdate,
+      type,
+      use,
       tenure,
-      preview,
-      booking,
+      landsize,
+      gfa,
+      top,
+      glslink,
+      dev,
+      landprice,
+      psf_gfa,
+      numunits,
       notes,
-      link,
+      devlink,
+      projlink
     }));
   dataArray.pop(); // Remove the last element
   return dataArray;
@@ -32,45 +41,77 @@ function displayData(items) {
   
     const row = document.createElement("tr");
     const nameCell = document.createElement("td");
+    const zoneCell = document.createElement("td");
     const categoryCell = document.createElement("td");
-    const topCell = document.createElement("td");
-    const numunitsCell = document.createElement("td");
+    const tenderdateCell = document.createElement("td");
+    const typeCell = document.createElement("td");
+    const useCell = document.createElement("td");
     const tenureCell = document.createElement("td");
-    const previewCell = document.createElement("td");
-    const bookingCell = document.createElement("td");
+    const landsizeCell = document.createElement("td");
+    const gfaCell = document.createElement("td");
+    const topCell = document.createElement("td");
+    const glslinkCell = document.createElement("td");
+    const devCell = document.createElement("td");
+    const landpriceCell = document.createElement("td");
+    const psf_gfaCell = document.createElement("td");
+    const numunitsCell = document.createElement("td");
     const notesCell = document.createElement("td");
-    const linkCell = document.createElement("td");
+    const devlinkCell = document.createElement("td");
+    const projlinkCell = document.createElement("td");
 
     nameCell.textContent = item.name;
+    zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
-      // Split the date string using "/"
-      const [day, month, year] = item.top.split("/");
-      const formattedDate = `${month}/${year}`;
-    topCell.textContent = item.top ? formattedDate : "TBC";
-    numunitsCell.textContent = item.numunits;
+    // Split the date string using "/"
+    const [day1, month1, year1] = item.tenderdate.split("/");
+    const formattedDate1 = `${month1}/${year1}`;
+    tenderdateCell.textContent = item.tenderdate ? formattedDate1 : "TBC";
+    typeCell.textContent = item.type;
+    useCell.textContent = item.use;
     tenureCell.textContent = item.tenure;
-      const [day1, month1, year1] = item.preview.split("/");
-      const formattedDate1 = `${month1}/${year1}`;
-    previewCell.textContent = item.preview ? formattedDate1 : "TBC";
-      const [day2, month2, year2] = item.booking.split("/");
-      const formattedDate2 = `${month2}/${year2}`;
-    bookingCell.textContent = item.booking ? formattedDate2 : "TBC";
+    landsizeCell.textContent = item.landsize;
+    gfaCell.textContent = item.gfa;
+    topCell.textContent = item.top;
+
+    const glslink = document.createElement("a");
+    glslink.href = item.glslink;
+    glslink.textContent = "More...";
+    glslinkCell.appendChild(glslink);
+
+    devCell.textContent = item.dev;
+    landpriceCell.textContent = item.landprice;
+    psf_gfaCell.textContent = item.psf_gfa;
+    numunitsCell.textContent = item.numunits;
     notesCell.textContent = item.notes;
     
-    const link = document.createElement("a");
-    link.href = item.link;
-    link.textContent = "More...";
-    linkCell.appendChild(link);
+    const devlink = document.createElement("a");
+    devlink.href = item.devlink;
+    devlink.textContent = "More...";
+    devlinkCell.appendChild(devlink);
     
+    const projlink = document.createElement("a");
+    projlink.href = item.projlink;
+    projlink.textContent = "More...";
+    projlinkCell.appendChild(projlink);
+
     row.appendChild(nameCell);
+    row.appendChild(zoneCell);
     row.appendChild(categoryCell);
-    row.appendChild(topCell);
-    row.appendChild(numunitsCell);
+    row.appendChild(tenderdateCell);
+    row.appendChild(typeCell);
+    row.appendChild(useCell);
     row.appendChild(tenureCell);
-    row.appendChild(previewCell);
-    row.appendChild(bookingCell);
+    row.appendChild(landsizeCell);
+    row.appendChild(gfaCell);
+    row.appendChild(topCell);
+    row.appendChild(glslinkCell);
+    row.appendChild(devCell);
+    row.appendChild(landpriceCell);
+    row.appendChild(psf_gfaCell);
+    row.appendChild(numunitsCell);
     row.appendChild(notesCell);
-    row.appendChild(linkCell);
+    row.appendChild(devlinkCell);
+    row.appendChild(projlinkCell);
 
     dataList.appendChild(row);
   });
@@ -94,13 +135,16 @@ function filterData() {
   
   filteredData = dataArray.filter((item) => {
     const nameMatch = item.name.toLowerCase().includes(filterValue);
+    const zoneMatch = item.zone.toLowerCase().includes(filterValue);
     const categoryMatch = item.category.toLowerCase().includes(filterValue);
-    const topMatch = item.top.toLowerCase().includes(filterValue);
-    const numunitsMatch = item.numunits.toLowerCase().includes(filterValue);
+    const typeMatch = item.type.toLowerCase().includes(filterValue);
+    const useMatch = item.use.toLowerCase().includes(filterValue);
     const tenureMatch = item.tenure.toLowerCase().includes(filterValue);
+    const topMatch = item.top.toLowerCase().includes(filterValue);
+    const devMatch = item.dev.toLowerCase().includes(filterValue);
     const notesMatch = item.notes.toLowerCase().includes(filterValue);
   
-      return nameMatch || categoryMatch  || topMatch || numunitsMatch || tenureMatch|| notesMatch;
+      return nameMatch || zoneMatch || categoryMatch  || typeMatch || useMatch || tenureMatch || topMatch || devMatch || notesMatch;
   });
 
   displayData(filteredData);
@@ -162,16 +206,36 @@ const sortedData = [...filteredData].sort((a, b) => {
   let result;
   if (sortProperty === 'name') {
     result = a.name.localeCompare(b.name);
+  } else if (sortProperty === 'zone') {
+    result = a.zone.localeCompare(b.zone);
   } else if (sortProperty === 'category') {
     result = a.category.localeCompare(b.category);
+  } else if (sortProperty === 'tenderdate') {
+    const tenderdateA = new Date(a.tenderdate);
+    const tenderdateB = new Date(b.tenderdate);
+    result = tenderdateA - tenderdateB;
+  } else if (sortProperty === 'type') {
+    result = a.type.localeCompare(b.type);
+  } else if (sortProperty === 'use') {
+    result = a.use.localeCompare(b.use);
+  } else if (sortProperty === 'tenure') {
+    result = a.tenure.localeCompare(b.tenure);
+  } else if (sortProperty === 'landsize') {
+    result = a.landsize.localeCompare(b.landsize);
+  } else if (sortProperty === 'gfa') {
+    result = a.gfa.localeCompare(b.gfa);
   } else if (sortProperty === 'top') {
     const topA = new Date(a.top);
     const topB = new Date(b.top);
     result = topA - topB;
+  } else if (sortProperty === 'dev') {
+    result = a.dev.localeCompare(b.dev);
+  } else if (sortProperty === 'landprice') {
+    result = a.landprice.localeCompare(b.landprice);
+  } else if (sortProperty === 'psf_gfa') {
+    result = a.psf_gfa.localeCompare(b.psf_gfa);
   } else if (sortProperty === 'numunits') {
-    result = a.numunits.localeCompare(b.numunits);
-  } else if (sortProperty === 'tenure') {
-    result = a.tenure.localeCompare(b.tenure);
+    result = parseInt(a.numunits) - parseInt(b.numunits);
   } else if (sortProperty === 'notes') {
     result = a.notes.localeCompare(b.notes);
   } else {

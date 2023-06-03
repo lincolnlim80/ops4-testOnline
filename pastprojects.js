@@ -8,8 +8,9 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, category, top, psf1, psf2, notes, link, psf1_max, psf2_max, psf1_avg, psf2_avg, psf1_new, psf2_new]) => ({
+    .map(([name, zone, category, top, psf1, psf2, notes, link, psf1_max, psf2_max, psf1_avg, psf2_avg, psf1_new, psf2_new]) => ({
       name,
+      zone,
       category,
       top,
       psf1,
@@ -38,6 +39,7 @@ function displayData(items) {
   
     const row = document.createElement("tr");
     const nameCell = document.createElement("td");
+    const zoneCell = document.createElement("td");
     const categoryCell = document.createElement("td");
     const topCell = document.createElement("td");
     const psf1Cell = document.createElement("td");
@@ -46,6 +48,7 @@ function displayData(items) {
     const linkCell = document.createElement("td");
 
     nameCell.textContent = item.name;
+    zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
       // Split the date string using "/"
       const [day, month, year] = item.top.split("/");
@@ -90,13 +93,14 @@ function filterData() {
   
   filteredData = dataArray.filter((item) => {
     const nameMatch = item.name.toLowerCase().includes(filterValue);
+    const zoneMatch = item.zone.toLowerCase().includes(filterValue);
     const categoryMatch = item.category.toLowerCase().includes(filterValue);
     const topMatch = item.top.toLowerCase().includes(filterValue);
     const psf1Match = item.psf1.toLowerCase().includes(filterValue);
     const psf2Match = item.psf2.toLowerCase().includes(filterValue);
     const notesMatch = item.notes.toLowerCase().includes(filterValue);
 
-    return nameMatch || categoryMatch || topMatch || psf1Match || psf2Match || notesMatch;
+    return nameMatch || zoneMatch|| categoryMatch || topMatch || psf1Match || psf2Match || notesMatch;
   });
 
   displayData(filteredData);
@@ -156,6 +160,8 @@ const sortedData = [...filteredData].sort((a, b) => {
   let result;
   if (sortProperty === 'name') {
     result = a.name.localeCompare(b.name);
+  } else if (sortProperty === 'zone') {
+    result = a.zone.localeCompare(b.zone);
   } else if (sortProperty === 'category') {
     result = a.category.localeCompare(b.category);
   } else if (sortProperty === 'top') {
@@ -236,4 +242,25 @@ averageHalfYearButton.addEventListener("click", function() {
     item.psf2 = item.psf2_avg;
   });
   displayData(filteredData);
+});
+
+
+// Get all the buttons
+const buttons = document.querySelectorAll("#searchContainer button");
+// Define the lighter shade of pastel green
+const pastelGreen = "#b3ffb3";
+// Add click event listener to each button
+// Set initial background color of LastResale button
+document.getElementById("LastResale").style.backgroundColor = pastelGreen;
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    // Remove the green background color from all buttons
+    buttons.forEach(btn => {
+      btn.style.backgroundColor = "";
+    });
+
+    // Add green background color to the clicked button
+    button.style.backgroundColor = pastelGreen;
+  });
 });

@@ -419,13 +419,13 @@
     <div id="popupForm" class="popup">
         <!-- this formspree works -->
         <form onsubmit="submitForm(event)" action="https://formspree.io/f/xzbqqkjd" method="POST">
-          <label for="name">Your Name:</label>
+          <label id="name">Your Name:</label>
           <input type="text" name="name" required autocomplete="name">
-          <label for="mobile">Your Mobile Number:</label>
+          <label id="mobile">Your Mobile Number:</label>
           <input type="tel" name="mobile" required autocomplete="tel">
-          <label for="email">Your Email:</label>
+          <label id="email">Your Email:</label>
           <input type="email" name="email" autocomplete="email">
-          <label for="enquiry">Enquiry:</label>
+          <label id="enquiry">Enquiry:</label>
           <textarea name="enquiry"></textarea>
           <button type="submit" class="send">Send</button>
           <a class="close" onclick="closeForm()">Close</a>

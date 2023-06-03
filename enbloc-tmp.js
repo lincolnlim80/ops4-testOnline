@@ -2,23 +2,21 @@
 // Function to fetch the CSV data
 let dataArray = [];
 async function fetchCSVData() {
-  const response = await fetch('./rsc/currentprojectsdata.csv');
+  const response = await fetch('./rsc/enbloc.csv');
   const csvData = await response.text();
   dataArray = csvData
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, top, numunits, tenure, preview, booking, notes, link]) => ({
+    .map(([name, category, street, top, tenure, psf1, psf2, notes]) => ({
       name,
-      zone,
       category,
+      street,
       top,
-      numunits,
       tenure,
-      preview,
-      booking,
-      notes,
-      link,
+      psf1,
+      psf2,
+      notes
     }));
   dataArray.pop(); // Remove the last element
   return dataArray;
@@ -33,50 +31,42 @@ function displayData(items) {
   
     const row = document.createElement("tr");
     const nameCell = document.createElement("td");
-    const zoneCell = document.createElement("td");
     const categoryCell = document.createElement("td");
+    const streetCell = document.createElement("td");
     const topCell = document.createElement("td");
-    const numunitsCell = document.createElement("td");
     const tenureCell = document.createElement("td");
-    const previewCell = document.createElement("td");
-    const bookingCell = document.createElement("td");
+    const psf1Cell = document.createElement("td");
+    const psf2Cell = document.createElement("td");
     const notesCell = document.createElement("td");
-    const linkCell = document.createElement("td");
 
     nameCell.textContent = item.name;
-    zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
-    topCell.textContent = item.top;
-    numunitsCell.textContent = item.numunits;
+    streetCell.textContent = item.street;
+      // Split the date string using "/"
+      const [day, month, year] = item.top.split("/");
+      const formattedDate = `${month}/${year}`;
+    topCell.textContent = item.top ? formattedDate : "TBC";
     tenureCell.textContent = item.tenure;
-      const [day1, month1, year1] = item.preview.split("/");
-      const formattedDate1 = `${month1}/${year1}`;
-    previewCell.textContent = item.preview ? formattedDate1 : "TBC";
-      const [day2, month2, year2] = item.booking.split("/");
-      const formattedDate2 = `${month2}/${year2}`;
-    bookingCell.textContent = item.booking ? formattedDate2 : "TBC";
+      var formattedpsf1 = Number(item.psf1).toLocaleString();
+      var formattedpsf2 = Number(item.psf2).toLocaleString();
+    psf1Cell.textContent = formattedpsf1;
+    psf2Cell.textContent = formattedpsf2;
     notesCell.textContent = item.notes;
     
-    const link = document.createElement("a");
-    link.href = item.link;
-    link.textContent = "More...";
-    linkCell.appendChild(link);
-    
     row.appendChild(nameCell);
-    row.appendChild(zoneCell);
     row.appendChild(categoryCell);
+    row.appendChild(streetCell);
     row.appendChild(topCell);
-    row.appendChild(numunitsCell);
     row.appendChild(tenureCell);
-    row.appendChild(previewCell);
-    row.appendChild(bookingCell);
+    row.appendChild(psf1Cell);
+    row.appendChild(psf2Cell);
     row.appendChild(notesCell);
-    row.appendChild(linkCell);
 
     dataList.appendChild(row);
   });
 }
 
+// Function to initialize the page
 async function initializePage() {
   const data = await fetchCSVData();
   filteredData = data; // Assign the fetched data to filteredData initially
@@ -87,7 +77,6 @@ async function initializePage() {
 window.addEventListener('load', initializePage);
 
 let filteredData = []; // Add this line at the beginning, outside any function
-
 // Function to filter the data
 function filterData() {
   const searchInput = document.getElementById("searchInput");
@@ -95,19 +84,19 @@ function filterData() {
   
   filteredData = dataArray.filter((item) => {
     const nameMatch = item.name.toLowerCase().includes(filterValue);
-    const zoneMatch = item.zone.toLowerCase().includes(filterValue);
-    const categoryMatch = item.category.toLowerCase().includes(filterValue);
+    const categoryMatch = item.street.toLowerCase().includes(filterValue);
+    const streetMatch = item.category.toLowerCase().includes(filterValue);
     const topMatch = item.top.toLowerCase().includes(filterValue);
-    const numunitsMatch = item.numunits.toLowerCase().includes(filterValue);
     const tenureMatch = item.tenure.toLowerCase().includes(filterValue);
+    const psf1Match = item.psf1.toLowerCase().includes(filterValue);
+    const psf2Match = item.psf2.toLowerCase().includes(filterValue);
     const notesMatch = item.notes.toLowerCase().includes(filterValue);
 
-    return nameMatch || zoneMatch || categoryMatch  || topMatch || numunitsMatch || tenureMatch|| notesMatch;
+    return nameMatch || categoryMatch || streetMatch|| topMatch || tenureMatch || psf1Match || psf2Match || notesMatch;
   });
 
   displayData(filteredData);
 }
-
 
 // Event listener for the search input
 const searchInput = document.getElementById("searchInput");
@@ -163,16 +152,20 @@ const sortedData = [...filteredData].sort((a, b) => {
   let result;
   if (sortProperty === 'name') {
     result = a.name.localeCompare(b.name);
-  } else if (sortProperty === 'zone') {
-    result = a.zone.localeCompare(b.zone);
   } else if (sortProperty === 'category') {
     result = a.category.localeCompare(b.category);
+  } else if (sortProperty === 'street') {
+    result = a.street.localeCompare(b.street);
   } else if (sortProperty === 'top') {
-    result = a.top.localeCompare(b.top);
-  } else if (sortProperty === 'numunits') {
-    result = parseInt(a.numunits) - parseInt(b.numunits);
+    const topA = new Date(a.top);
+    const topB = new Date(b.top);
+    result = topA - topB;
   } else if (sortProperty === 'tenure') {
     result = a.tenure.localeCompare(b.tenure);
+  } else if (sortProperty === 'psf1') {
+    result = Number(a.psf1.replace(/,/g, '')) - Number(b.psf1.replace(/,/g, ''));
+  } else if (sortProperty === 'psf2') {
+    result = Number(a.psf2.replace(/,/g, '')) - Number(b.psf2.replace(/,/g, ''));
   } else if (sortProperty === 'notes') {
     result = a.notes.localeCompare(b.notes);
   } else {
@@ -190,6 +183,7 @@ const sortedData = [...filteredData].sort((a, b) => {
   displayData(sortedData);
 }
 
+
 // Function to clear the search input
 function clearSearchInput() {
   searchInput.value = ""; // Clear the search input value
@@ -199,3 +193,4 @@ function clearSearchInput() {
 // Event listener for the clear icon
 const clearIcon = document.getElementById("clearIcon");
 clearIcon.addEventListener("click", clearSearchInput);
+

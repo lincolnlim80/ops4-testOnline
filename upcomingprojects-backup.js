@@ -2,7 +2,7 @@
 // Function to fetch the CSV data
 let dataArray = [];
 async function fetchCSVData() {
-  const response = await fetch('./rsc/currentprojectsdata.csv');
+  const response = await fetch('./rsc/upcomingprojectsdata.csv');
   const csvData = await response.text();
   dataArray = csvData
     .split('\n')
@@ -46,7 +46,10 @@ function displayData(items) {
     nameCell.textContent = item.name;
     zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
-    topCell.textContent = item.top;
+      // Split the date string using "/"
+      const [day, month, year] = item.top.split("/");
+      const formattedDate = `${month}/${year}`;
+    topCell.textContent = item.top ? formattedDate : "TBC";
     numunitsCell.textContent = item.numunits;
     tenureCell.textContent = item.tenure;
       const [day1, month1, year1] = item.preview.split("/");
@@ -77,6 +80,7 @@ function displayData(items) {
   });
 }
 
+// Function to initialize the page
 async function initializePage() {
   const data = await fetchCSVData();
   filteredData = data; // Assign the fetched data to filteredData initially
@@ -87,7 +91,6 @@ async function initializePage() {
 window.addEventListener('load', initializePage);
 
 let filteredData = []; // Add this line at the beginning, outside any function
-
 // Function to filter the data
 function filterData() {
   const searchInput = document.getElementById("searchInput");
@@ -101,12 +104,13 @@ function filterData() {
     const numunitsMatch = item.numunits.toLowerCase().includes(filterValue);
     const tenureMatch = item.tenure.toLowerCase().includes(filterValue);
     const notesMatch = item.notes.toLowerCase().includes(filterValue);
-
-    return nameMatch || zoneMatch || categoryMatch  || topMatch || numunitsMatch || tenureMatch|| notesMatch;
+  
+      return nameMatch || zoneMatch || categoryMatch  || topMatch || numunitsMatch || tenureMatch|| notesMatch;
   });
 
   displayData(filteredData);
 }
+
 
 
 // Event listener for the search input
@@ -168,9 +172,11 @@ const sortedData = [...filteredData].sort((a, b) => {
   } else if (sortProperty === 'category') {
     result = a.category.localeCompare(b.category);
   } else if (sortProperty === 'top') {
-    result = a.top.localeCompare(b.top);
+    const topA = new Date(a.top);
+    const topB = new Date(b.top);
+    result = topA - topB;
   } else if (sortProperty === 'numunits') {
-    result = parseInt(a.numunits) - parseInt(b.numunits);
+    result = a.numunits.localeCompare(b.numunits);
   } else if (sortProperty === 'tenure') {
     result = a.tenure.localeCompare(b.tenure);
   } else if (sortProperty === 'notes') {
