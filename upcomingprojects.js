@@ -8,7 +8,7 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, tenderdate, type, use, tenure, landsize, gfa, top, glslink, dev, landprice, psf_gfa, numunits, notes, devlink, projlink]) => ({
+    .map(([name, zone, category, tenderdate, type, use, tenure, landsize, gfa, top, glslink, dev, landprice, psfgfa, numunits, notes, devlink, projlink]) => ({
       name,
       zone,
       category,
@@ -22,7 +22,7 @@ async function fetchCSVData() {
       glslink,
       dev,
       landprice,
-      psf_gfa,
+      psfgfa,
       numunits,
       notes,
       devlink,
@@ -53,7 +53,7 @@ function displayData(items) {
     const glslinkCell = document.createElement("td");
     const devCell = document.createElement("td");
     const landpriceCell = document.createElement("td");
-    const psf_gfaCell = document.createElement("td");
+    const psfgfaCell = document.createElement("td");
     const numunitsCell = document.createElement("td");
     const notesCell = document.createElement("td");
     const devlinkCell = document.createElement("td");
@@ -62,10 +62,10 @@ function displayData(items) {
     nameCell.textContent = item.name;
     zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
-    // Split the date string using "/"
-    const [day1, month1, year1] = item.tenderdate.split("/");
-    const formattedDate1 = `${month1}/${year1}`;
-    tenderdateCell.textContent = item.tenderdate ? formattedDate1 : "TBC";
+
+    tenderdateCell.textContent = item.tenderdate;
+
+
     typeCell.textContent = item.type;
     useCell.textContent = item.use;
     tenureCell.textContent = item.tenure;
@@ -80,7 +80,7 @@ function displayData(items) {
 
     devCell.textContent = item.dev;
     landpriceCell.textContent = item.landprice;
-    psf_gfaCell.textContent = item.psf_gfa;
+    psfgfaCell.textContent = item.psfgfa;
     numunitsCell.textContent = item.numunits;
     notesCell.textContent = item.notes;
     
@@ -107,7 +107,7 @@ function displayData(items) {
     row.appendChild(glslinkCell);
     row.appendChild(devCell);
     row.appendChild(landpriceCell);
-    row.appendChild(psf_gfaCell);
+    row.appendChild(psfgfaCell);
     row.appendChild(numunitsCell);
     row.appendChild(notesCell);
     row.appendChild(devlinkCell);
@@ -134,17 +134,27 @@ function filterData() {
   const filterValue = searchInput.value.toLowerCase();
   
   filteredData = dataArray.filter((item) => {
-    const nameMatch = item.name.toLowerCase().includes(filterValue);
-    const zoneMatch = item.zone.toLowerCase().includes(filterValue);
-    const categoryMatch = item.category.toLowerCase().includes(filterValue);
-    const typeMatch = item.type.toLowerCase().includes(filterValue);
-    const useMatch = item.use.toLowerCase().includes(filterValue);
-    const tenureMatch = item.tenure.toLowerCase().includes(filterValue);
-    const topMatch = item.top.toLowerCase().includes(filterValue);
-    const devMatch = item.dev.toLowerCase().includes(filterValue);
-    const notesMatch = item.notes.toLowerCase().includes(filterValue);
-  
-      return nameMatch || zoneMatch || categoryMatch  || typeMatch || useMatch || tenureMatch || topMatch || devMatch || notesMatch;
+    const nameMatch = item.name && item.name.toLowerCase().includes(filterValue.toLowerCase());
+    const zoneMatch = item.zone && item.zone.toLowerCase().includes(filterValue.toLowerCase());
+    const categoryMatch = item.category && item.category.toLowerCase().includes(filterValue.toLowerCase());
+    const tenderdateMatch = item.tenderdate && item.tenderdate.toLowerCase().includes(filterValue.toLowerCase());
+    const typeMatch = item.type && item.type.toLowerCase().includes(filterValue.toLowerCase());
+    const useMatch = item.use && item.use.toLowerCase().includes(filterValue.toLowerCase());
+    const tenureMatch = item.tenure && item.tenure.toLowerCase().includes(filterValue.toLowerCase());
+    const landsizeMatch = item.landsize && item.landsize.toLowerCase().includes(filterValue.toLowerCase());
+    const gfaMatch = item.gfa && item.gfa.toLowerCase().includes(filterValue.toLowerCase());
+    const topMatch = item.top && item.top.toLowerCase().includes(filterValue.toLowerCase());
+    const glslinkMatch = item.glslink && item.glslink.toLowerCase().includes(filterValue.toLowerCase());
+    const devMatch = item.dev && item.dev.toLowerCase().includes(filterValue.toLowerCase());
+    const landpriceMatch = item.landprice && item.landprice.toLowerCase().includes(filterValue.toLowerCase());
+    const psfgfaMatch = item.psfgfa && item.psfgfa.toLowerCase().includes(filterValue.toLowerCase());
+    const numunitsMatch = item.numunits && item.numunits.toLowerCase().includes(filterValue.toLowerCase());
+    const notesMatch = item.notes && item.notes.toLowerCase().includes(filterValue.toLowerCase());
+    const devlinkMatch = item.devlink && item.devlink.toLowerCase().includes(filterValue.toLowerCase());
+    const projlinkMatch = item.projlink && item.projlink.toLowerCase().includes(filterValue.toLowerCase());
+    
+
+      return nameMatch || zoneMatch || categoryMatch || tenderdateMatch  || typeMatch || useMatch || tenureMatch || landsizeMatch || gfaMatch || topMatch || glslinkMatch || devMatch || landpriceMatch || psfgfaMatch || numunitsMatch || notesMatch || devlinkMatch || projlinkMatch;
   });
 
   displayData(filteredData);
@@ -225,15 +235,13 @@ const sortedData = [...filteredData].sort((a, b) => {
   } else if (sortProperty === 'gfa') {
     result = a.gfa.localeCompare(b.gfa);
   } else if (sortProperty === 'top') {
-    const topA = new Date(a.top);
-    const topB = new Date(b.top);
-    result = topA - topB;
+    result = parseInt(a.top) - parseInt(b.top);
   } else if (sortProperty === 'dev') {
     result = a.dev.localeCompare(b.dev);
   } else if (sortProperty === 'landprice') {
     result = a.landprice.localeCompare(b.landprice);
-  } else if (sortProperty === 'psf_gfa') {
-    result = a.psf_gfa.localeCompare(b.psf_gfa);
+  } else if (sortProperty === 'psfgfa') {
+    result = a.psfgfa.localeCompare(b.psfgfa);
   } else if (sortProperty === 'numunits') {
     result = parseInt(a.numunits) - parseInt(b.numunits);
   } else if (sortProperty === 'notes') {

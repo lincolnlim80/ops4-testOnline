@@ -2,29 +2,19 @@
 // Function to fetch the CSV data
 let dataArray = [];
 async function fetchCSVData() {
-  const response = await fetch('./rsc/pastprojectsdata.csv');
+  const response = await fetch('./rsc/developerlist.csv');
   const csvData = await response.text();
   dataArray = csvData
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, top, psf1, psf2, notes, link, psf1_max, psf2_max, psf1_avg, psf2_avg, psf1_new, psf2_new]) => ({
+    .map(([dev, name, zone, category, top, link]) => ({
+      dev,
       name,
       zone,
       category,
       top,
-      psf1,
-      psf2,
-      notes,
-      link,
-      psf1_max,
-      psf2_max,
-      psf1_avg,
-      psf2_avg,
-      psf1_new,
-      psf2_new,
-      psf1_last: psf1,
-      psf2_last: psf2
+      link
     }));
   dataArray.pop(); // Remove the last element
   return dataArray;
@@ -38,36 +28,28 @@ function displayData(items) {
   items.forEach((item, index) => {
   
     const row = document.createElement("tr");
+    const devCell = document.createElement("td");
     const nameCell = document.createElement("td");
     const zoneCell = document.createElement("td");
     const categoryCell = document.createElement("td");
     const topCell = document.createElement("td");
-    const psf1Cell = document.createElement("td");
-    const psf2Cell = document.createElement("td");
-    const notesCell = document.createElement("td");
     const linkCell = document.createElement("td");
 
+    devCell.textContent = item.dev;
     nameCell.textContent = item.name;
     zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
- 
     topCell.textContent = item.top 
-    psf1Cell.textContent = item.psf1;
-    psf2Cell.textContent = item.psf2;
-    notesCell.textContent = item.notes;
-    
     const link = document.createElement("a");
     link.href = item.link;
     link.textContent = "More...";
     linkCell.appendChild(link);
     
+    row.appendChild(devCell);
     row.appendChild(nameCell);
     row.appendChild(zoneCell);
     row.appendChild(categoryCell);
     row.appendChild(topCell);
-    row.appendChild(psf1Cell);
-    row.appendChild(psf2Cell);
-    row.appendChild(notesCell);
     row.appendChild(linkCell);
 
     dataList.appendChild(row);
@@ -91,15 +73,13 @@ function filterData() {
   const filterValue = searchInput.value.toLowerCase();
   
   filteredData = dataArray.filter((item) => {
+    const devMatch = item.dev.toLowerCase().includes(filterValue);
     const nameMatch = item.name.toLowerCase().includes(filterValue);
     const zoneMatch = item.zone.toLowerCase().includes(filterValue);
     const categoryMatch = item.category.toLowerCase().includes(filterValue);
     const topMatch = item.top.toLowerCase().includes(filterValue);
-    const psf1Match = item.psf1.toLowerCase().includes(filterValue);
-    const psf2Match = item.psf2.toLowerCase().includes(filterValue);
-    const notesMatch = item.notes.toLowerCase().includes(filterValue);
 
-    return nameMatch || zoneMatch|| categoryMatch || topMatch || psf1Match || psf2Match || notesMatch;
+    return  devMatch|| nameMatch || zoneMatch|| categoryMatch || topMatch;
   });
 
   displayData(filteredData);
@@ -157,7 +137,9 @@ if (arrowIcon.classList.contains('asc')) {
 
 const sortedData = [...filteredData].sort((a, b) => {
   let result;
-  if (sortProperty === 'name') {
+  if (sortProperty === 'dev') {
+    result = a.dev.localeCompare(b.dev);
+  } else if (sortProperty === 'name') {
     result = a.name.localeCompare(b.name);
   } else if (sortProperty === 'zone') {
     result = a.zone.localeCompare(b.zone);
@@ -167,12 +149,6 @@ const sortedData = [...filteredData].sort((a, b) => {
     const topA = new Date(a.top);
     const topB = new Date(b.top);
     result = topA - topB;
-  } else if (sortProperty === 'psf1') {
-    result = parseInt(a.psf1) - parseInt(b.psf1);
-  } else if (sortProperty === 'psf2') {
-    result = parseInt(a.psf2) - parseInt(b.psf2);
-  } else if (sortProperty === 'notes') {
-    result = a.notes.localeCompare(b.notes);
   } else {
     result = 0; // Default sorting order if sortProperty is not recognized
   }
@@ -199,67 +175,3 @@ function clearSearchInput() {
 const clearIcon = document.getElementById("clearIcon");
 clearIcon.addEventListener("click", clearSearchInput);
 
-
-// Get the button elements
-var lastNewSaleButton = document.getElementById("LastNewSale");
-var lastResaleButton = document.getElementById("LastResale");
-var maxValueButton = document.getElementById("MaxValue");
-var averageHalfYearButton = document.getElementById("AverageHalfYear");
-
-// Add event listeners to the buttons
-lastNewSaleButton.addEventListener("click", function() {
-  // Code to execute when the Last Transacted button is clicked
-  filteredData.forEach((item) => {
-    item.psf1 = item.psf1_new;
-    item.psf2 = item.psf2_new;
-  });
-  displayData(filteredData);
-});
-
-lastResaleButton.addEventListener("click", function() {
-  // Code to execute when the Last Transacted button is clicked
-  filteredData.forEach((item) => {
-    item.psf1 = item.psf1_last;
-    item.psf2 = item.psf2_last;
-  });
-  displayData(filteredData);
-});
-
-maxValueButton.addEventListener("click", function() {
-    // Code to execute when the Max Value button is clicked
-  filteredData.forEach((item) => {
-    item.psf1 = item.psf1_max;
-    item.psf2 = item.psf2_max;
-  });
-  displayData(filteredData);
-});
-
-averageHalfYearButton.addEventListener("click", function() {
-  // Code to execute when the Average Half Year button is clicked
-  filteredData.forEach((item) => {
-    item.psf1 = item.psf1_avg;
-    item.psf2 = item.psf2_avg;
-  });
-  displayData(filteredData);
-});
-
-
-// Get all the buttons
-const buttons = document.querySelectorAll("#searchContainer button");
-// Define the lighter shade of pastel green
-const pastelGreen = "#b3ffb3";
-// Add click event listener to each button
-// Set initial background color of LastResale button
-document.getElementById("LastResale").style.backgroundColor = pastelGreen;
-
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    // Remove the green background color from all buttons
-    buttons.forEach(btn => {
-      btn.style.backgroundColor = "";
-    });
-
-    // Add green background color to the clicked button
-    button.style.backgroundColor = pastelGreen;
-  });
-});
