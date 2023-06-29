@@ -8,23 +8,57 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, top, psf1, psf2, notes, link, psf1_max, psf2_max, psf1_avg, psf2_avg, psf1_new, psf2_new]) => ({
+    .map(([name, zone, category, top, psf1, psf1_date, psf2, psf2_date, notes, link, psf1_max, psf1_max_date, psf2_max, psf2_max_date, psf1_avg, psf1_avg_date, psf2_avg, psf2_avg_date, psf1_new, psf1_new_date, psf2_new, psf2_new_date, psf1_2018, psf1_2018_date, psf2_2018, psf2_2018_date, psf1_2019, psf1_2019_date, psf2_2019, psf2_2019_date, psf1_2020, psf1_2020_date, psf2_2020, psf2_2020_date, psf1_2021, psf1_2021_date, psf2_2021, psf2_2021_date, psf1_2022, psf1_2022_date, psf2_2022, psf2_2022_date, psf1_2023, psf1_2023_date, psf2_2023, psf2_2023_date]) => ({
       name,
       zone,
       category,
       top,
       psf1,
+      psf1_date,
       psf2,
+      psf2_date,
       notes,
       link,
-      psf1_max,
-      psf2_max,
-      psf1_avg,
-      psf2_avg,
-      psf1_new,
-      psf2_new,
+      psf1_max, 
+      psf1_max_date, 
+      psf2_max, 
+      psf2_max_date, 
+      psf1_avg, 
+      psf1_avg_date, 
+      psf2_avg, 
+      psf2_avg_date, 
+      psf1_new, 
+      psf1_new_date, 
+      psf2_new, 
+      psf2_new_date, 
+      psf1_2018, 
+      psf1_2018_date, 
+      psf2_2018, 
+      psf2_2018_date, 
+      psf1_2019, 
+      psf1_2019_date, 
+      psf2_2019, 
+      psf2_2019_date, 
+      psf1_2020, 
+      psf1_2020_date, 
+      psf2_2020, 
+      psf2_2020_date, 
+      psf1_2021, 
+      psf1_2021_date, 
+      psf2_2021, 
+      psf2_2021_date, 
+      psf1_2022, 
+      psf1_2022_date, 
+      psf2_2022, 
+      psf2_2022_date, 
+      psf1_2023, 
+      psf1_2023_date, 
+      psf2_2023, 
+      psf2_2023_date,
       psf1_last: psf1,
-      psf2_last: psf2
+      psf2_last: psf2,
+      psf1_date_last: psf1_date,
+      psf2_date_last: psf2_date
     }));
   dataArray.pop(); // Remove the last element
   return dataArray;
@@ -43,7 +77,9 @@ function displayData(items) {
     const categoryCell = document.createElement("td");
     const topCell = document.createElement("td");
     const psf1Cell = document.createElement("td");
+    const psf1_dateCell = document.createElement("td");
     const psf2Cell = document.createElement("td");
+    const psf2_dateCell = document.createElement("td");
     const notesCell = document.createElement("td");
     const linkCell = document.createElement("td");
 
@@ -53,7 +89,9 @@ function displayData(items) {
  
     topCell.textContent = item.top 
     psf1Cell.textContent = item.psf1;
+    psf1_dateCell.textContent = item.psf1_date;
     psf2Cell.textContent = item.psf2;
+    psf2_dateCell.textContent = item.psf2_date;
     notesCell.textContent = item.notes;
     
     const link = document.createElement("a");
@@ -66,7 +104,9 @@ function displayData(items) {
     row.appendChild(categoryCell);
     row.appendChild(topCell);
     row.appendChild(psf1Cell);
+    row.appendChild(psf1_dateCell);
     row.appendChild(psf2Cell);
+    row.appendChild(psf2_dateCell);
     row.appendChild(notesCell);
     row.appendChild(linkCell);
 
@@ -97,9 +137,8 @@ function filterData() {
     const topMatch = item.top.toLowerCase().includes(filterValue);
     const psf1Match = item.psf1.toLowerCase().includes(filterValue);
     const psf2Match = item.psf2.toLowerCase().includes(filterValue);
-    const notesMatch = item.notes.toLowerCase().includes(filterValue);
 
-    return nameMatch || zoneMatch|| categoryMatch || topMatch || psf1Match || psf2Match || notesMatch;
+    return nameMatch || zoneMatch|| categoryMatch || topMatch || psf1Match || psf2Match;
   });
 
   displayData(filteredData);
@@ -108,8 +147,6 @@ function filterData() {
 // Event listener for the search input
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("input", filterData);
-
-
 
 // Select the column headers
 const headers = document.querySelectorAll('th[data-sort]');
@@ -205,13 +242,21 @@ var lastNewSaleButton = document.getElementById("LastNewSale");
 var lastResaleButton = document.getElementById("LastResale");
 var maxValueButton = document.getElementById("MaxValue");
 var averageHalfYearButton = document.getElementById("AverageHalfYear");
+var averageY2018Button = document.getElementById("Y2018");
+var averageY2019Button = document.getElementById("Y2019");
+var averageY2020Button = document.getElementById("Y2020");
+var averageY2021Button = document.getElementById("Y2021");
+var averageY2022Button = document.getElementById("Y2022");
+var averageY2023Button = document.getElementById("Y2023");
 
 // Add event listeners to the buttons
 lastNewSaleButton.addEventListener("click", function() {
   // Code to execute when the Last Transacted button is clicked
   filteredData.forEach((item) => {
     item.psf1 = item.psf1_new;
+    item.psf1_date = item.psf1_new_date;
     item.psf2 = item.psf2_new;
+    item.psf2_date = item.psf2_new_date;
   });
   displayData(filteredData);
 });
@@ -220,7 +265,9 @@ lastResaleButton.addEventListener("click", function() {
   // Code to execute when the Last Transacted button is clicked
   filteredData.forEach((item) => {
     item.psf1 = item.psf1_last;
+    item.psf1_date = item.psf1_last_date;
     item.psf2 = item.psf2_last;
+    item.psf2_date = item.psf2_last_date;
   });
   displayData(filteredData);
 });
@@ -229,7 +276,9 @@ maxValueButton.addEventListener("click", function() {
     // Code to execute when the Max Value button is clicked
   filteredData.forEach((item) => {
     item.psf1 = item.psf1_max;
+    item.psf1_date = item.psf1_max_date;
     item.psf2 = item.psf2_max;
+    item.psf2_date = item.psf2_max_date;
   });
   displayData(filteredData);
 });
@@ -238,11 +287,78 @@ averageHalfYearButton.addEventListener("click", function() {
   // Code to execute when the Average Half Year button is clicked
   filteredData.forEach((item) => {
     item.psf1 = item.psf1_avg;
+    item.psf1_date = item.psf1_avg_date;
     item.psf2 = item.psf2_avg;
+    item.psf2_date = item.psf2_avg_date;
   });
   displayData(filteredData);
 });
 
+averageY2018Button.addEventListener("click", function() {
+  // Code to execute when the Y2018 button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_2018;
+    item.psf1_date = item.psf1_2018_date;
+    item.psf2 = item.psf2_2018;
+    item.psf2_date = item.psf2_2018_date;
+  });
+  displayData(filteredData);
+});
+
+averageY2019Button.addEventListener("click", function() {
+  // Code to execute when the Y2019 button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_2019;
+    item.psf1_date = item.psf1_2019_date;
+    item.psf2 = item.psf2_2019;
+    item.psf2_date = item.psf2_2019_date;
+  });
+  displayData(filteredData);
+});
+
+averageY2020Button.addEventListener("click", function() {
+  // Code to execute when the Y2020 button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_2020;
+    item.psf1_date = item.psf1_2020_date;
+    item.psf2 = item.psf2_2020;
+    item.psf2_date = item.psf2_2020_date;
+  });
+  displayData(filteredData);
+});
+
+averageY2021Button.addEventListener("click", function() {
+  // Code to execute when the Y2021 button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_2021;
+    item.psf1_date = item.psf1_2021_date;
+    item.psf2 = item.psf2_2021;
+    item.psf2_date = item.psf2_2021_date;
+  });
+  displayData(filteredData);
+});
+
+averageY2022Button.addEventListener("click", function() {
+  // Code to execute when the Y2022 button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_2022;
+    item.psf1_date = item.psf1_2022_date;
+    item.psf2 = item.psf2_2022;
+    item.psf2_date = item.psf2_2022_date;
+  });
+  displayData(filteredData);
+});
+
+averageY2023Button.addEventListener("click", function() {
+  // Code to execute when the Y2023 button is clicked
+  filteredData.forEach((item) => {
+    item.psf1 = item.psf1_2023;
+    item.psf1_date = item.psf1_2023_date;
+    item.psf2 = item.psf2_2023;
+    item.psf2_date = item.psf2_2023_date;
+  });
+  displayData(filteredData);
+});
 
 // Get all the buttons
 const buttons = document.querySelectorAll("#searchContainer button");
