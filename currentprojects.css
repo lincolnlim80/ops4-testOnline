@@ -1,7 +1,23 @@
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#dataTable {
+  width: 2000px;
+}
+
 table {
+    table-layout: fixed;
+    width: auto;
     border-collapse: collapse;
-    width: 100%;
   }
+
+/* Set width for the first and third columns */
+table tr th:nth-child(1),
+table tr th:nth-child(7) {
+  width: 300px; /* Adjust the width value as desired */
+}
   
   th, td {
     border: 1px solid #ddd;

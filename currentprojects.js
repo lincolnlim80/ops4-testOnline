@@ -8,7 +8,7 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, top, numunits, tenure, preview, booking, notes, link]) => ({
+    .map(([name, zone, category, top, numunits, tenure, preview, booking, psf, notes, link]) => ({
       name,
       zone,
       category,
@@ -18,6 +18,7 @@ async function fetchCSVData() {
       preview,
       booking,
       notes,
+      psf,
       link,
     }));
   dataArray.pop(); // Remove the last element
@@ -40,6 +41,7 @@ function displayData(items) {
     const tenureCell = document.createElement("td");
     const previewCell = document.createElement("td");
     const bookingCell = document.createElement("td");
+    const psfCell = document.createElement("td");
     const notesCell = document.createElement("td");
     const linkCell = document.createElement("td");
 
@@ -55,6 +57,7 @@ function displayData(items) {
       const [day2, month2, year2] = item.booking.split("/");
       const formattedDate2 = `${month2}/${year2}`;
     bookingCell.textContent = item.booking ? formattedDate2 : "TBC";
+    psfCell.textContent = item.psf;
     notesCell.textContent = item.notes;
     
     const link = document.createElement("a");
@@ -70,6 +73,7 @@ function displayData(items) {
     row.appendChild(tenureCell);
     row.appendChild(previewCell);
     row.appendChild(bookingCell);
+    row.appendChild(psfCell);
     row.appendChild(notesCell);
     row.appendChild(linkCell);
 

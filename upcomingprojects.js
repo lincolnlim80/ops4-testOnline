@@ -8,26 +8,26 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, tenderdate, type, use, tenure, landsize, gfa, top, glslink, dev, landprice, psfgfa, numunits, notes, devlink, projlink]) => ({
+    .map(([name, zone, category, top, numunits, tenure, notes, projlink, tenderdate, type, use, landsize, gfa, glslink, dev, landprice, psfgfa, devlink]) => ({
       name,
       zone,
       category,
+      top,
+      numunits,
+      tenure,
+      notes,
+      projlink,
       tenderdate,
       type,
       use,
-      tenure,
       landsize,
       gfa,
-      top,
       glslink,
       dev,
       landprice,
       psfgfa,
-      numunits,
-      notes,
-      devlink,
-      projlink
-    }));
+      devlink
+      }));
   dataArray.pop(); // Remove the last element
   return dataArray;
 }
@@ -43,76 +43,70 @@ function displayData(items) {
     const nameCell = document.createElement("td");
     const zoneCell = document.createElement("td");
     const categoryCell = document.createElement("td");
+    const topCell = document.createElement("td");
+    const tenureCell = document.createElement("td");
+    const numunitsCell = document.createElement("td");
+    const notesCell = document.createElement("td");
+    const projlinkCell = document.createElement("td");
     const tenderdateCell = document.createElement("td");
     const typeCell = document.createElement("td");
     const useCell = document.createElement("td");
-    const tenureCell = document.createElement("td");
     const landsizeCell = document.createElement("td");
     const gfaCell = document.createElement("td");
-    const topCell = document.createElement("td");
     const glslinkCell = document.createElement("td");
     const devCell = document.createElement("td");
     const landpriceCell = document.createElement("td");
     const psfgfaCell = document.createElement("td");
-    const numunitsCell = document.createElement("td");
-    const notesCell = document.createElement("td");
     const devlinkCell = document.createElement("td");
-    const projlinkCell = document.createElement("td");
 
     nameCell.textContent = item.name;
     zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
-
-    tenderdateCell.textContent = item.tenderdate;
-
-
-    typeCell.textContent = item.type;
-    useCell.textContent = item.use;
-    tenureCell.textContent = item.tenure;
-    landsizeCell.textContent = item.landsize;
-    gfaCell.textContent = item.gfa;
     topCell.textContent = item.top;
-
-    const glslink = document.createElement("a");
-    glslink.href = item.glslink;
-    glslink.textContent = "More...";
-    glslinkCell.appendChild(glslink);
-
-    devCell.textContent = item.dev;
-    landpriceCell.textContent = item.landprice;
-    psfgfaCell.textContent = item.psfgfa;
     numunitsCell.textContent = item.numunits;
+    tenureCell.textContent = item.tenure;
     notesCell.textContent = item.notes;
-    
-    const devlink = document.createElement("a");
-    devlink.href = item.devlink;
-    devlink.textContent = "More...";
-    devlinkCell.appendChild(devlink);
-    
     const projlink = document.createElement("a");
     projlink.href = item.projlink;
     projlink.textContent = "More...";
     projlinkCell.appendChild(projlink);
 
+    tenderdateCell.textContent = item.tenderdate;
+    typeCell.textContent = item.type;
+    useCell.textContent = item.use;
+    landsizeCell.textContent = item.landsize;
+    gfaCell.textContent = item.gfa;
+    const glslink = document.createElement("a");
+    glslink.href = item.glslink;
+    glslink.textContent = "More...";
+    glslinkCell.appendChild(glslink);
+    devCell.textContent = item.dev;
+    landpriceCell.textContent = item.landprice;
+    psfgfaCell.textContent = item.psfgfa;
+    const devlink = document.createElement("a");
+    devlink.href = item.devlink;
+    devlink.textContent = "More...";
+    devlinkCell.appendChild(devlink);
+    
+
     row.appendChild(nameCell);
     row.appendChild(zoneCell);
     row.appendChild(categoryCell);
+    row.appendChild(topCell);
+    row.appendChild(numunitsCell);
+    row.appendChild(tenureCell);
+    row.appendChild(notesCell);
+    row.appendChild(projlinkCell);
     row.appendChild(tenderdateCell);
     row.appendChild(typeCell);
     row.appendChild(useCell);
-    row.appendChild(tenureCell);
     row.appendChild(landsizeCell);
     row.appendChild(gfaCell);
-    row.appendChild(topCell);
     row.appendChild(glslinkCell);
     row.appendChild(devCell);
     row.appendChild(landpriceCell);
     row.appendChild(psfgfaCell);
-    row.appendChild(numunitsCell);
-    row.appendChild(notesCell);
     row.appendChild(devlinkCell);
-    row.appendChild(projlinkCell);
-
     dataList.appendChild(row);
   });
 }
@@ -137,24 +131,23 @@ function filterData() {
     const nameMatch = item.name && item.name.toLowerCase().includes(filterValue.toLowerCase());
     const zoneMatch = item.zone && item.zone.toLowerCase().includes(filterValue.toLowerCase());
     const categoryMatch = item.category && item.category.toLowerCase().includes(filterValue.toLowerCase());
+    const topMatch = item.top && item.top.toLowerCase().includes(filterValue.toLowerCase());
+    const numunitsMatch = item.numunits && item.numunits.toLowerCase().includes(filterValue.toLowerCase());
+    const tenureMatch = item.tenure && item.tenure.toLowerCase().includes(filterValue.toLowerCase());
+    const notesMatch = item.notes && item.notes.toLowerCase().includes(filterValue.toLowerCase());
+    const projlinkMatch = item.projlink && item.projlink.toLowerCase().includes(filterValue.toLowerCase());
     const tenderdateMatch = item.tenderdate && item.tenderdate.toLowerCase().includes(filterValue.toLowerCase());
     const typeMatch = item.type && item.type.toLowerCase().includes(filterValue.toLowerCase());
     const useMatch = item.use && item.use.toLowerCase().includes(filterValue.toLowerCase());
-    const tenureMatch = item.tenure && item.tenure.toLowerCase().includes(filterValue.toLowerCase());
     const landsizeMatch = item.landsize && item.landsize.toLowerCase().includes(filterValue.toLowerCase());
     const gfaMatch = item.gfa && item.gfa.toLowerCase().includes(filterValue.toLowerCase());
-    const topMatch = item.top && item.top.toLowerCase().includes(filterValue.toLowerCase());
     const glslinkMatch = item.glslink && item.glslink.toLowerCase().includes(filterValue.toLowerCase());
     const devMatch = item.dev && item.dev.toLowerCase().includes(filterValue.toLowerCase());
     const landpriceMatch = item.landprice && item.landprice.toLowerCase().includes(filterValue.toLowerCase());
     const psfgfaMatch = item.psfgfa && item.psfgfa.toLowerCase().includes(filterValue.toLowerCase());
-    const numunitsMatch = item.numunits && item.numunits.toLowerCase().includes(filterValue.toLowerCase());
-    const notesMatch = item.notes && item.notes.toLowerCase().includes(filterValue.toLowerCase());
     const devlinkMatch = item.devlink && item.devlink.toLowerCase().includes(filterValue.toLowerCase());
-    const projlinkMatch = item.projlink && item.projlink.toLowerCase().includes(filterValue.toLowerCase());
-    
 
-      return nameMatch || zoneMatch || categoryMatch || tenderdateMatch  || typeMatch || useMatch || tenureMatch || landsizeMatch || gfaMatch || topMatch || glslinkMatch || devMatch || landpriceMatch || psfgfaMatch || numunitsMatch || notesMatch || devlinkMatch || projlinkMatch;
+      return nameMatch || zoneMatch || categoryMatch || topMatch || numunitsMatch || tenureMatch || notesMatch  || projlinkMatch || tenderdateMatch  || typeMatch || useMatch || landsizeMatch || gfaMatch || glslinkMatch || devMatch || landpriceMatch || psfgfaMatch || devlinkMatch;
   });
 
   displayData(filteredData);
@@ -270,3 +263,6 @@ function clearSearchInput() {
 // Event listener for the clear icon
 const clearIcon = document.getElementById("clearIcon");
 clearIcon.addEventListener("click", clearSearchInput);
+
+
+
