@@ -12,7 +12,7 @@ $('#campaignstart').val(today);
 var ip_MarketingDays = 28;
 var ip_OTPDays = 21;
 var ip_ExerciseDays = 30;
-var ip_ApplicationDays = 14;
+var ip_ApplicationDays = 28;
 var ip_AcceptanceDays = 7;
 var ip_EndorsementDays = 7;
 var ip_ApprovalDays = 28;
