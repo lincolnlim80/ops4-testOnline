@@ -8,8 +8,9 @@ async function fetchCSVData() {
     .split('\n')
     .map((row) => row.split(','))
     .slice(1) // Skip the header row
-    .map(([name, zone, category, top, psf1, psf1_date, psf2, psf2_date, notes, link, psf1_max, psf1_max_date, psf2_max, psf2_max_date, psf1_avg, psf1_avg_date, psf2_avg, psf2_avg_date, psf1_new, psf1_new_date, psf2_new, psf2_new_date, psf1_2018, psf1_2018_date, psf2_2018, psf2_2018_date, psf1_2019, psf1_2019_date, psf2_2019, psf2_2019_date, psf1_2020, psf1_2020_date, psf2_2020, psf2_2020_date, psf1_2021, psf1_2021_date, psf2_2021, psf2_2021_date, psf1_2022, psf1_2022_date, psf2_2022, psf2_2022_date, psf1_2023, psf1_2023_date, psf2_2023, psf2_2023_date]) => ({
+    .map(([name, type, zone, category, top, psf1, psf1_date, psf2, psf2_date, notes, link, psf1_max, psf1_max_date, psf2_max, psf2_max_date, psf1_avg, psf1_avg_date, psf2_avg, psf2_avg_date, psf1_new, psf1_new_date, psf2_new, psf2_new_date, psf1_2018, psf1_2018_date, psf2_2018, psf2_2018_date, psf1_2019, psf1_2019_date, psf2_2019, psf2_2019_date, psf1_2020, psf1_2020_date, psf2_2020, psf2_2020_date, psf1_2021, psf1_2021_date, psf2_2021, psf2_2021_date, psf1_2022, psf1_2022_date, psf2_2022, psf2_2022_date, psf1_2023, psf1_2023_date, psf2_2023, psf2_2023_date]) => ({
       name,
+      type,
       zone,
       category,
       top,
@@ -57,8 +58,8 @@ async function fetchCSVData() {
       psf2_2023_date,
       psf1_last: psf1,
       psf2_last: psf2,
-      psf1_date_last: psf1_date,
-      psf2_date_last: psf2_date
+      psf1_last_date: psf1_date,
+      psf2_last_date: psf2_date
     }));
   dataArray.pop(); // Remove the last element
   return dataArray;
@@ -73,6 +74,7 @@ function displayData(items) {
   
     const row = document.createElement("tr");
     const nameCell = document.createElement("td");
+    const typeCell = document.createElement("td");
     const zoneCell = document.createElement("td");
     const categoryCell = document.createElement("td");
     const topCell = document.createElement("td");
@@ -84,6 +86,7 @@ function displayData(items) {
     const linkCell = document.createElement("td");
 
     nameCell.textContent = item.name;
+    typeCell.textContent = item.type;
     zoneCell.textContent = item.zone;
     categoryCell.textContent = item.category;
  
@@ -100,6 +103,7 @@ function displayData(items) {
     linkCell.appendChild(link);
     
     row.appendChild(nameCell);
+    row.appendChild(typeCell);
     row.appendChild(zoneCell);
     row.appendChild(categoryCell);
     row.appendChild(topCell);
@@ -132,13 +136,12 @@ function filterData() {
   
   filteredData = dataArray.filter((item) => {
     const nameMatch = item.name.toLowerCase().includes(filterValue);
+    const typeMatch = item.type.toLowerCase().includes(filterValue);
     const zoneMatch = item.zone.toLowerCase().includes(filterValue);
     const categoryMatch = item.category.toLowerCase().includes(filterValue);
     const topMatch = item.top.toLowerCase().includes(filterValue);
-    const psf1Match = item.psf1.toLowerCase().includes(filterValue);
-    const psf2Match = item.psf2.toLowerCase().includes(filterValue);
 
-    return nameMatch || zoneMatch|| categoryMatch || topMatch || psf1Match || psf2Match;
+    return nameMatch || typeMatch || zoneMatch|| categoryMatch || topMatch;
   });
 
   displayData(filteredData);
@@ -196,6 +199,8 @@ const sortedData = [...filteredData].sort((a, b) => {
   let result;
   if (sortProperty === 'name') {
     result = a.name.localeCompare(b.name);
+  } else if (sortProperty === 'type') {
+    result = a.type.localeCompare(b.type);
   } else if (sortProperty === 'zone') {
     result = a.zone.localeCompare(b.zone);
   } else if (sortProperty === 'category') {
