@@ -893,6 +893,7 @@ function recalcinterest_principal1() {
   $("#textfinexint1").html(numberWithCommas(ip_finexint1));
   recalcFINEX1();
   recalcTOTFINEXPRIN1();
+  recalcTOTCAPGAIN1();
 }
 
 function recalcFINEX1() {
@@ -912,16 +913,16 @@ function recalcTOTFINEXPRIN1() {
 }
 
 function recalcTOTCAPGAIN1() {
-  ip_fv1 = parseFloat((ip_purchaseprice1 * Math.pow(1 + (ip_pcpy_capgain1/100) / 1, 1 * ip_invperiod1)).toFixed(0));
+  ip_fv1 = (ip_purchaseprice1 * Math.pow(1 + (ip_pcpy_capgain1/100) / 1, 1 * ip_invperiod1));
   ip_totcapgain1 = ip_fv1 - ip_purchaseprice1;
-  $("#textfv1").html(numberWithCommas(ip_fv1));
-  $("#texttotcapgain1").html(numberWithCommas(ip_totcapgain1));
+  $("#textfv1").html(numberWithCommas(parseFloat(ip_fv1).toFixed(0)));
+  $("#texttotcapgain1").html(numberWithCommas(parseFloat(ip_totcapgain1).toFixed(0)));
   recalcTOTEQUITY1();
 }
 
 function recalcTOTEQUITY1() {
-  ip_totequity1 = parseFloat((ip_totfinexprin1 + ip_dp1 + ip_totcapgain1)).toFixed(0);
-  $("#texttotequity1").html(numberWithCommas(ip_totequity1));
+  ip_totequity1 = (ip_totfinexprin1 + ip_dp1 + ip_totcapgain1);
+  $("#texttotequity1").html(numberWithCommas(parseFloat(ip_totequity1).toFixed(0)));
 }
 
 function recalcGRM1() {
@@ -949,40 +950,40 @@ function recalcCF1() {
 }
 
 function recalcRY1() {
-  op_ry1 = parseFloat(((op_noi1 / ip_purchaseprice1) * 100).toFixed(1));
-  $("#textry1").html(numberWithCommas(op_ry1));
+  op_ry1 = (op_noi1 / ip_purchaseprice1) * 100;
+  $("#textry1").html(numberWithCommas(parseFloat(op_ry1).toFixed(1)));
 }
 
 function recalcOER1() {
-  op_oer1 = parseFloat(((ip_opex1 / ip_gi1) * 100).toFixed(1));
-  $("#textoer1").html(numberWithCommas(op_oer1));
+  op_oer1 = (ip_opex1 / ip_gi1) * 100;
+  $("#textoer1").html(numberWithCommas(parseFloat(op_oer1).toFixed(1)));
 }
 
 function recalcGIPSF1() {
-  op_gipsf1 = parseFloat(((ip_gi1 / ip_area1)).toFixed(1));
-  $("#textgipsf1").html(numberWithCommas(op_gipsf1));
+  op_gipsf1 = (ip_gi1 / ip_area1);
+  $("#textgipsf1").html(numberWithCommas(parseFloat(op_gipsf1).toFixed(1)));
 }
 
 function recalcCOC1_FirstYear() {
   op_coc1_firstyear = op_cf1/(ip_dp1 + ip_finexacquireoneoff1)*100;
-  $("#textcoc1_firstyear").html(numberWithCommas(parseFloat(op_coc1_firstyear).toFixed(1)));;
+  $("#textcoc1_firstyear").html(numberWithCommas(parseFloat(op_coc1_firstyear).toFixed(1)));
 }
 
 function recalcCOC1_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
   op_coc1_invperiod = op_sp1/(-op_totcf1 + ip_dp1) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
-  $("#textcoc1_invperiod").html((parseFloat(op_coc1_invperiod).toFixed(1)));;
+  $("#textcoc1_invperiod").html((parseFloat(op_coc1_invperiod).toFixed(1)));
 }
 
 function recalcROE1_FirstYear() {
   op_roe1_firstyear = op_cf1/ip_dp1*100;  
-  $("#textroe1_firstyear").html(numberWithCommas(parseFloat(op_roe1_firstyear).toFixed(1)));;
+  $("#textroe1_firstyear").html(numberWithCommas(parseFloat(op_roe1_firstyear).toFixed(1)));
 }
 
 function recalcROE1_INVPERIOD() {
   op_roe1_invperiod = (op_cf1*ip_invperiod1) / op_sp1 *100;
-  $("#textroe1_invperiod").html(numberWithCommas(parseFloat(op_roe1_invperiod).toFixed(1)));;
+  $("#textroe1_invperiod").html(numberWithCommas(parseFloat(op_roe1_invperiod).toFixed(1)));
 }
 function recalcInput1() {
   recalcGI1();
@@ -1041,6 +1042,7 @@ function recalcinterest_principal2() {
   $("#textfinexint2").html(numberWithCommas(ip_finexint2));
   recalcFINEX2();
   recalcTOTFINEXPRIN2();
+  recalcTOTCAPGAIN2();
 }
 
 function recalcFINEX2() {
@@ -1061,16 +1063,18 @@ function recalcTOTFINEXPRIN2() {
 }
 
 function recalcTOTCAPGAIN2() {
-  ip_fv2 = parseFloat((ip_purchaseprice2 * Math.pow(1 + (ip_pcpy_capgain2/100) / 1, 1 * ip_invperiod2)).toFixed(0));
+  ip_fv2 = (ip_purchaseprice2 * Math.pow(1 + (ip_pcpy_capgain2/100) / 1, 1 * ip_invperiod2));
   ip_totcapgain2 = ip_fv2 - ip_purchaseprice2;
-  $("#textfv2").html(numberWithCommas(ip_fv2));
-  $("#texttotcapgain2").html(numberWithCommas(ip_totcapgain2));
+  $("#textfv2").html(numberWithCommas(parseFloat(ip_fv2).toFixed(0)));
+  $("#texttotcapgain2").html(numberWithCommas(parseFloat(ip_totcapgain2).toFixed(0)));
   recalcTOTEQUITY2();
 }
 
+
+
 function recalcTOTEQUITY2() {
-  ip_totequity2 = parseFloat((ip_totfinexprin2 + ip_dp2 + ip_totcapgain2)).toFixed(0);
-  $("#texttotequity2").html(numberWithCommas(ip_totequity2));
+  ip_totequity2 = ip_totfinexprin2 + ip_dp2 + ip_totcapgain2;
+  $("#texttotequity2").html(numberWithCommas(parseFloat(ip_totequity2).toFixed(0)));
 }
 
 function recalcGRM2() {
@@ -1099,18 +1103,18 @@ function recalcCF2() {
 
 
 function recalcRY2() {
-  op_ry2 = parseFloat(((op_noi2 / ip_purchaseprice2) * 100).toFixed(1));
-  $("#textry2").html(numberWithCommas(op_ry2));
+  op_ry2 = op_noi2 / ip_purchaseprice2 * 100;
+  $("#textry2").html(numberWithCommas(parseFloat(op_ry2).toFixed(1)));
 }
 
 function recalcOER2() {
-  op_oer2 = parseFloat(((ip_opex2 / ip_gi2) * 100).toFixed(1));
-  $("#textoer2").html(numberWithCommas(op_oer2));
+  op_oer2 = ip_opex2 / ip_gi2 * 100;
+  $("#textoer2").html(numberWithCommas(parseFloat(op_oer2).toFixed(1)));
 }
 
 function recalcGIPSF2() {
-  op_gipsf2 = parseFloat(((ip_gi2 / ip_area2)).toFixed(1));
-  $("#textgipsf2").html(numberWithCommas(op_gipsf2));
+  op_gipsf2 = ip_gi2 / ip_area2;
+  $("#textgipsf2").html(numberWithCommas(parseFloat(op_gipsf2).toFixed(1)));
 }
 
 function recalcCOC2_FirstYear() {
@@ -1122,18 +1126,18 @@ function recalcCOC2_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
   op_coc2_invperiod = op_sp2/(-op_totcf2 + ip_dp2) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
-  $("#textcoc2_invperiod").html(numberWithCommas(parseFloat(op_coc2_invperiod).toFixed(1)));;
+  $("#textcoc2_invperiod").html(numberWithCommas(parseFloat(op_coc2_invperiod).toFixed(1)));
 }
 
 
 function recalcROE2_FirstYear() {
   op_roe2_firstyear = op_cf2/ip_dp2*100;  
-  $("#textroe2_firstyear").html(numberWithCommas(parseFloat(op_roe2_firstyear).toFixed(1)));;
+  $("#textroe2_firstyear").html(numberWithCommas(parseFloat(op_roe2_firstyear).toFixed(1)));
 }
 
 function recalcROE2_INVPERIOD() {
   op_roe2_invperiod = (op_cf2*ip_invperiod2) / op_sp2 *100;
-  $("#textroe2_invperiod").html(numberWithCommas(parseFloat(op_roe2_invperiod).toFixed(1)));;
+  $("#textroe2_invperiod").html(numberWithCommas(parseFloat(op_roe2_invperiod).toFixed(1)));
 }
 
 function recalcInput2() {
@@ -1194,6 +1198,7 @@ function recalcinterest_principal3() {
   $("#textfinexint3").html(numberWithCommas(ip_finexint3));
   recalcFINEX3();
   recalcTOTFINEXPRIN3();
+  recalcTOTCAPGAIN3();
 }
 
 function recalcFINEX3() {
@@ -1213,16 +1218,16 @@ function recalcTOTFINEXPRIN3() {
 }
 
 function recalcTOTCAPGAIN3() {
-  ip_fv3 = parseFloat((ip_purchaseprice3 * Math.pow(1 + (ip_pcpy_capgain3/100) / 1, 1 * ip_invperiod3)).toFixed(0));
+  ip_fv3 = (ip_purchaseprice3 * Math.pow(1 + (ip_pcpy_capgain3/100) / 1, 1 * ip_invperiod3));
   ip_totcapgain3 = ip_fv3 - ip_purchaseprice3;
-  $("#textfv3").html(numberWithCommas(ip_fv3));
-  $("#texttotcapgain3").html(numberWithCommas(ip_totcapgain3));
+  $("#textfv3").html(numberWithCommas(parseFloat(ip_fv3).toFixed(0)));
+  $("#texttotcapgain3").html(numberWithCommas(parseFloat(ip_totcapgain3).toFixed(0)));
   recalcTOTEQUITY3();
 }
 
 function recalcTOTEQUITY3() {
-  ip_totequity3 = parseFloat((ip_totfinexprin3 + ip_dp3 + ip_totcapgain3)).toFixed(0);
-  $("#texttotequity3").html(numberWithCommas(ip_totequity3));
+  ip_totequity3 = ip_totfinexprin3 + ip_dp3 + ip_totcapgain3;
+  $("#texttotequity3").html(numberWithCommas(parseFloat(ip_totequity3).toFixed(0)));
 }
 
 function recalcGRM3() {
@@ -1251,18 +1256,18 @@ function recalcCF3() {
 
 
 function recalcRY3() {
-  op_ry3 = parseFloat(((op_noi3 / ip_purchaseprice3) * 100).toFixed(1));
-  $("#textry3").html(numberWithCommas(op_ry3));
+  op_ry3 = op_noi3 / ip_purchaseprice3 * 100;
+  $("#textry3").html(numberWithCommas(parseFloat(op_ry3).toFixed(1)));
 }
 
 function recalcOER3() {
-  op_oer3 = parseFloat(((ip_opex3 / ip_gi3) * 100).toFixed(1));
-  $("#textoer3").html(numberWithCommas(op_oer3));
+  op_oer3 = ip_opex3 / ip_gi3 * 100;
+  $("#textoer3").html(numberWithCommas(parseFloat(op_oer3).toFixed(1)));
 }
 
 function recalcGIPSF3() {
-  op_gipsf3 = parseFloat(((ip_gi3 / ip_area3)).toFixed(1));
-  $("#textgipsf3").html(numberWithCommas(op_gipsf3));
+  op_gipsf3 = ip_gi3 / ip_area3;
+  $("#textgipsf3").html(numberWithCommas(parseFloat(op_gipsf3).toFixed(1)));
 }
 
 function recalcCOC3_FirstYear() {
@@ -1274,17 +1279,17 @@ function recalcCOC3_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
   op_coc3_invperiod = op_sp3/(-op_totcf3 + ip_dp3) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
-  $("#textcoc3_invperiod").html(numberWithCommas(parseFloat(op_coc3_invperiod).toFixed(1)));;
+  $("#textcoc3_invperiod").html(numberWithCommas(parseFloat(op_coc3_invperiod).toFixed(1)));
 }
 
 function recalcROE3_FirstYear() {
   op_roe3_firstyear = op_cf3/ip_dp3*100;  
-  $("#textroe3_firstyear").html(numberWithCommas(parseFloat(op_roe3_firstyear).toFixed(1)));;
+  $("#textroe3_firstyear").html(numberWithCommas(parseFloat(op_roe3_firstyear).toFixed(1)));
 }
 
 function recalcROE3_INVPERIOD() {
   op_roe3_invperiod = (op_cf3*ip_invperiod3) / op_sp3 *100;
-  $("#textroe3_invperiod").html(numberWithCommas(parseFloat(op_roe3_invperiod).toFixed(1)));;
+  $("#textroe3_invperiod").html(numberWithCommas(parseFloat(op_roe3_invperiod).toFixed(1)));
 }
 
 function recalcInput3() {
@@ -1345,6 +1350,7 @@ function recalcinterest_principal4() {
   $("#textfinexint4").html(numberWithCommas(ip_finexint4));
   recalcFINEX4();
   recalcTOTFINEXPRIN4();
+  recalcTOTCAPGAIN4();
 }
 
 function recalcFINEX4() {
@@ -1365,16 +1371,16 @@ function recalcTOTFINEXPRIN4() {
 }
 
 function recalcTOTCAPGAIN4() {
-  ip_fv4 = parseFloat((ip_purchaseprice4 * Math.pow(1 + (ip_pcpy_capgain4/100) / 1, 1 * ip_invperiod4)).toFixed(0));
+  ip_fv4 = ip_purchaseprice4 * Math.pow(1 + (ip_pcpy_capgain4/100) / 1, 1 * ip_invperiod4);
   ip_totcapgain4 = ip_fv4 - ip_purchaseprice4;
-  $("#textfv4").html(numberWithCommas(ip_fv4));
-  $("#texttotcapgain4").html(numberWithCommas(ip_totcapgain4));
+  $("#textfv4").html(numberWithCommas(parseFloat(ip_fv4).toFixed(0)));
+  $("#texttotcapgain4").html(numberWithCommas(parseFloat(ip_totcapgain4).toFixed(0)));
   recalcTOTEQUITY4();
 }
 
 function recalcTOTEQUITY4() {
-  ip_totequity4 = parseFloat((ip_totfinexprin4 + ip_dp4 + ip_totcapgain4)).toFixed(0);
-  $("#texttotequity4").html(numberWithCommas(ip_totequity4));
+  ip_totequity4 = (ip_totfinexprin4 + ip_dp4 + ip_totcapgain4);
+  $("#texttotequity4").html(numberWithCommas(parseFloat(ip_totequity4).toFixed(0)));
 }
 
 function recalcGRM4() {
@@ -1404,18 +1410,18 @@ function recalcCF4() {
 
 
 function recalcRY4() {
-  op_ry4 = parseFloat(((op_noi4 / ip_purchaseprice4) * 100).toFixed(1));
-  $("#textry4").html(numberWithCommas(op_ry4));
+  op_ry4 = op_noi4 / ip_purchaseprice4 * 100;
+  $("#textry4").html(numberWithCommas(parseFloat(op_ry4).toFixed(1)));
 }
 
 function recalcOER4() {
-  op_oer4 = parseFloat(((ip_opex4 / ip_gi4) * 100).toFixed(1));
-  $("#textoer4").html(numberWithCommas(op_oer4));
+  op_oer4 = ip_opex4 / ip_gi4 * 100;
+  $("#textoer4").html(numberWithCommas(parseFloat(op_oer4).toFixed(1)));
 }
 
 function recalcGIPSF4() {
-  op_gipsf4 = parseFloat(((ip_gi4 / ip_area4)).toFixed(1));
-  $("#textgipsf4").html(numberWithCommas(op_gipsf4));
+  op_gipsf4 = ip_gi4 / ip_area4;
+  $("#textgipsf4").html(numberWithCommas(parseFloat(op_gipsf4).toFixed(1)));
 }
 
 function recalcCOC4_FirstYear() {
@@ -1427,18 +1433,18 @@ function recalcCOC4_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
   op_coc4_invperiod = op_sp4/(-op_totcf4 + ip_dp4) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
-  $("#textcoc4_invperiod").html(numberWithCommas(parseFloat(op_coc4_invperiod).toFixed(1)));;
+  $("#textcoc4_invperiod").html(numberWithCommas(parseFloat(op_coc4_invperiod).toFixed(1)));
 }
 
 
 function recalcROE4_FirstYear() {
   op_roe4_firstyear = op_cf4/ip_dp4*100;  
-  $("#textroe4_firstyear").html(numberWithCommas(parseFloat(op_roe4_firstyear).toFixed(1)));;
+  $("#textroe4_firstyear").html(numberWithCommas(parseFloat(op_roe4_firstyear).toFixed(1)));
 }
 
 function recalcROE4_INVPERIOD() {
   op_roe4_invperiod = (op_cf4*ip_invperiod4) / op_sp4 *100;
-  $("#textroe4_invperiod").html(numberWithCommas(parseFloat(op_roe4_invperiod).toFixed(1)));;
+  $("#textroe4_invperiod").html(numberWithCommas(parseFloat(op_roe4_invperiod).toFixed(1)));
 }
 
 function recalcInput4() {
@@ -2193,4 +2199,3 @@ const retrieveButton = document.getElementById('retrieveData');
     alert('Data cleared successfully!');
   });
 });
-
