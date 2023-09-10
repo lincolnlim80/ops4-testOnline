@@ -257,7 +257,7 @@
     <script src="./index_background.js"></script>
 
     <section class="u-align-center u-clearfix u-grey-15 u-section-2" id="sec-0ac6">
-      <img class="u-expanded-width u-image u-image-1" src="./img/SkyGarden.jpg" data-image-width="1920" data-image-height="791">
+      <img class="u-expanded-width u-image u-image-1" src="./img/output_prefix-017.jpg" data-image-width="1920" data-image-height="791">
       <div class="u-list u-list-1">
         <div class="u-repeater u-repeater-1">
           <!-- use the below if you want to open access to public -->
@@ -269,14 +269,14 @@
           </div> -->
           <!-- use the below if you want user to type in a password -->
           <div class="u-align-center u-container-style u-custom-border u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-1">
-            <div class="u-container-layout u-similar-container u-container-layout-1"><a href = "#" onclick="getPassword('pastprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house2.png" alt=""></span></a>
+            <div class="u-container-layout u-similar-container u-container-layout-1"><a href = "./pastprojects.html" onclick="getPassword('pastprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house2.png" alt=""></span></a>
               <h4 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1"> Past Projects</h4>
               <p class="u-custom-item u-text u-text-grey-40 u-text-2">Looking for past transactions for private condos? Find out the average psf here!!</p>
               <p></p>
               <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p">Past transactions for others?</p> 
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#" onclick="getPassword('pastprojects-ec')">Executive Condos</a>.</p>
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#" onclick="getPassword('pastprojects-stratalanded')">Strata Landed</a>.</p>
-              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="#" onclick="getPassword('pastprojects-landed')">Landed</a>.</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="./pastprojects-ec.html" onclick="getPassword('pastprojects-ec')">Executive Condos</a>.</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="./pastprojects-stratalanded.html" onclick="getPassword('pastprojects-stratalanded')">Strata Landed</a>.</p>
+              <p class="u-custom-item u-text u-text-grey-40 u-text-2 custom-p"><a href="./pastprojects-landed.html" onclick="getPassword('pastprojects-landed')">Landed</a>.</p>
             </div>
           </div> 
           
@@ -296,13 +296,13 @@
           </script>
           <!-- note the href='#' allows pointer to change -->
           <div class="u-align-center u-container-style u-custom-border u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-2">
-            <div class="u-container-layout u-similar-container u-container-layout-2"><a href = "#" onclick="checkPreviousInfo('currentprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-2"><img src="./img/icon-house1.png" alt=""></span></a>
+            <div class="u-container-layout u-similar-container u-container-layout-2"><a href = "./currentprojects.html" onclick="checkPreviousInfo('currentprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-2"><img src="./img/icon-house1.png" alt=""></span></a>
               <h4 class="u-custom-font u-font-montserrat u-text u-text-default u-text-3"> Current Projects</h4>
               <p class="u-custom-item u-text u-text-grey-40 u-text-4">Searching for your dream home? Look no further! Find out more by visiting the sales galleries!!</p>
             </div>
           </div>
           <div class="u-align-center u-container-style u-custom-border u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-3">
-            <div class="u-container-layout u-similar-container u-container-layout-3"><a href = "#" onclick="checkPreviousInfo('upcomingprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-3" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house3.png" alt=""></span></a>
+            <div class="u-container-layout u-similar-container u-container-layout-3"><a href = "./upcomingprojects.html" onclick="checkPreviousInfo('upcomingprojects')"><span class="u-file-icon u-icon u-icon-circle u-palette-3-base u-text-white u-icon-3" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><img src="./img/icon-house3.png" alt=""></span></a>
               <h4 class="u-custom-font u-font-montserrat u-text u-text-default u-text-5"> Upcoming Projects</h4>
               <p class="u-custom-item u-text u-text-grey-40 u-text-6">Investment interest? Find out the upcoming projects here!!</p>
             <p></p>
@@ -322,12 +322,12 @@
         <div id="popupForm" class="popup">
           <!-- this formspree works -->
           <form onsubmit="submitForm(event)" action="https://formspree.io/f/xzbqqkjd" method="POST">
-            <label fid="name">Your Name:</label>
-            <input type="text" name="name" required>
+            <label id="name">Your Name:</label>
+            <input type="text" name="name" autocomplete="name" required>
             <label id="mobile">Your Mobile Number:</label>
             <input type="tel" name="mobile" required>
             <label id="email">Your Email:</label>
-            <input type="email" name="email">
+            <input type="email" name="email" autocomplete="email">
             <!-- your other form fields go here -->
             <button type="submit" class="send">Send</button>
             <a class="close" onclick="closeForm()">Close</a>
@@ -338,7 +338,8 @@
           <script>
             function submitForm(event) {
               // event.preventDefault(); // Prevent the form from submitting in the default way
-              
+              console.log("got here");
+  
               // Perform any necessary form validation here
 
               // Redirect to the next page
@@ -356,7 +357,7 @@
       <!-- can insert a link to testimonials here -->
       <!-- <p class="u-text u-text-default u-text-7">Images from <a href="https://www.test.com/photos/mockup" class="u-border-1 u-border-active-grey-60 u-border-black u-border-hover-grey-60 u-btn u-button-link u-button-style u-none u-text-body-color u-btn-1">mpa</a>
       </p> -->
-      <p class="u-font-montserrat">"Over 100,000 actual sales data points collected over the last five years and covering more than 2,000 condos to provide you a quick reference."</p>
+      <p class="u-font-montserrat">"Over 100,000 actual sales data points collected over the last five years and covering more than 2,000 condos and apartments to provide you a quick reference."</p>
     </section>
     
 
