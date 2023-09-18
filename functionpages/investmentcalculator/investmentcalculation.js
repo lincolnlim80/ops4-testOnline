@@ -107,6 +107,10 @@ var ip_finexother1 = 0;
 var ip_finexother2 = 0;
 var ip_finexother3 = 0;
 var ip_finexother4 = 0;
+var ip_totfinex1 = 0;
+var ip_totfinex2 = 0;
+var ip_totfinex3 = 0;
+var ip_totfinex4 = 0;
 var ip_totequity1 = 0;
 var ip_totequity2 = 0;
 var ip_totequity3 = 0;
@@ -188,6 +192,26 @@ var op_roe1_invperiod = 30;
 var op_roe2_invperiod = 30;
 var op_roe3_invperiod = 30;
 var op_roe4_invperiod = 30;
+var op_roi1=5;
+var op_roi2=5;
+var op_roi3=5;
+var op_roi4=5;
+var op_cr1 = 30;
+var op_cr2 = 30;
+var op_cr3 = 30;
+var op_cr4 = 30;
+var op_irr1 = 3;
+var op_irr2 = 3;
+var op_irr3 = 3;
+var op_irr4 = 3;
+var op_irrnpv1 = 0;
+var op_irrnpv2 = 0;
+var op_irrnpv3 = 0;
+var op_irrnpv4 = 0;
+var op_irrnpvLogicText1 = "";
+var op_irrnpvLogicText2 = "";
+var op_irrnpvLogicText3 = "";
+var op_irrnpvLogicText4 = "";
 
 //define variables to be used in JS that links with HTML objects
 // var $Totincome_rangeslider = $('#js-totincome-range');
@@ -307,7 +331,8 @@ $tenure1_amount.on('input', function() {
 });
 
 $invperiod1_amount.on('input', function() {  
-  ip_invperiod1 = this.value * 1;
+  ip_invperiod1 = Math.min(this.value * 1 , ip_tenure1);
+  $invperiod1_amount[0].value = ip_invperiod1;
    $("#textinvperiod1").html(numberWithCommas(ip_invperiod1));
    recalcTOTFINEXPRIN1();
 });
@@ -327,17 +352,17 @@ $rentalrate1_amount.on('input', function() {
 $opex1_amount.on('input', function() {  
   ip_opex1 = this.value * 1;
    $("#textopex1").html(numberWithCommas(ip_opex1));
-   var opexmgmt1 = $opexmgmt1_amount[0].value = "";
+   ip_opexmgmt1 = $opexmgmt1_amount[0].value = 0;
    $("#textopexmgmt1").html("");
-   var opexmaint1 = $opexmaint1_amount[0].value = "";
+   ip_opexmaint1 = $opexmaint1_amount[0].value = 0;
    $("#textopexmaint1").html("");
-   var opextax1 = $opextax1_amount[0].value = "";
+   ip_opextax1 = $opextax1_amount[0].value = 0;
    $("#textopextax1").html("");
-   var opexinsure1 = $opexinsure1_amount[0].value = "";
+   ip_opexinsure1 = $opexinsure1_amount[0].value = 0;
    $("#textopexinsure1").html("");
-   var opexutil1 = $opexutil1_amount[0].value = "";
+   ip_opexutil1 = $opexutil1_amount[0].value = 0;
    $("#textopexutil1").html("");
-   var opexagentfee1 = $opexagentfee1_amount[0].value = "";
+   ip_opexagentfee1 = $opexagentfee1_amount[0].value = 0;
    $("#textopexagentfee1").html("");
 });
 
@@ -449,7 +474,8 @@ $tenure2_amount.on('input', function() {
 });
 
 $invperiod2_amount.on('input', function() {  
-  ip_invperiod2 = this.value * 1;
+  ip_invperiod2 = Math.min(this.value * 1 , ip_tenure2);
+  $invperiod2_amount[0].value = ip_invperiod2;
    $("#textinvperiod2").html(numberWithCommas(ip_invperiod2));
    recalcTOTFINEXPRIN2();
    
@@ -470,19 +496,18 @@ $rentalrate2_amount.on('input', function() {
 $opex2_amount.on('input', function() {  
   ip_opex2 = this.value * 1;
    $("#textopex2").html(numberWithCommas(ip_opex2));
-   var opexmgmt2 = $opexmgmt2_amount[0].value = "";
+   ip_opexmgmt2 = $opexmgmt2_amount[0].value = 0;
    $("#textopexmgmt2").html("");
-   var opexmaint2 = $opexmaint2_amount[0].value = "";
+   ip_opexmaint2 = $opexmaint2_amount[0].value = 0;
    $("#textopexmaint2").html("");
-   var opextax2 = $opextax2_amount[0].value = "";
+   ip_opextax2 = $opextax2_amount[0].value = 0;
    $("#textopextax2").html("");
-   var opexinsure2 = $opexinsure2_amount[0].value = "";
+   ip_opexinsure2 = $opexinsure2_amount[0].value = 0;
    $("#textopexinsure2").html("");
-   var opexutil2 = $opexutil2_amount[0].value = "";
+   ip_opexutil2 = $opexutil2_amount[0].value = 0;
    $("#textopexutil2").html("");
-   var opexagentfee2 = $opexagentfee2_amount[0].value = "";
+   ip_opexagentfee2 = $opexagentfee2_amount[0].value = 0;
    $("#textopexagentfee2").html("");
-   
 });
 
 $opexmgmt2_amount.on('input', function() {  
@@ -593,7 +618,8 @@ $tenure3_amount.on('input', function() {
 });
 
 $invperiod3_amount.on('input', function() {  
-  ip_invperiod3 = this.value * 1;
+  ip_invperiod3 = Math.min(this.value * 1 , ip_tenure3);
+  $invperiod3_amount[0].value = ip_invperiod3;
    $("#textinvperiod3").html(numberWithCommas(ip_invperiod3));
    recalcTOTFINEXPRIN3();
    
@@ -614,17 +640,17 @@ $rentalrate3_amount.on('input', function() {
 $opex3_amount.on('input', function() {  
   ip_opex3 = this.value * 1;
    $("#textopex3").html(numberWithCommas(ip_opex3));
-   var opexmgmt3 = $opexmgmt3_amount[0].value = "";
+   ip_opexmgmt3 = $opexmgmt3_amount[0].value = 0;
    $("#textopexmgmt3").html("");
-   var opexmaint3 = $opexmaint3_amount[0].value = "";
+   ip_opexmaint3 = $opexmaint3_amount[0].value = 0;
    $("#textopexmaint3").html("");
-   var opextax3 = $opextax3_amount[0].value = "";
+   ip_opextax3 = $opextax3_amount[0].value = 0;
    $("#textopextax3").html("");
-   var opexinsure3 = $opexinsure3_amount[0].value = "";
+   ip_opexinsure3 = $opexinsure3_amount[0].value = 0;
    $("#textopexinsure3").html("");
-   var opexutil3 = $opexutil3_amount[0].value = "";
+   ip_opexutil3 = $opexutil3_amount[0].value = 0;
    $("#textopexutil3").html("");
-   var opexagentfee3 = $opexagentfee3_amount[0].value = "";
+   ip_opexagentfee3 = $opexagentfee3_amount[0].value = 0;
    $("#textopexagentfee3").html("");
    
 });
@@ -737,8 +763,9 @@ $tenure4_amount.on('input', function() {
    
 });
 
-$invperiod4_amount.on('input', function() {  
-  ip_invperiod4 = this.value * 1;
+$invperiod4_amount.on('input', function() { 
+  ip_invperiod4 = Math.min(this.value * 1 , ip_tenure4);
+  $invperiod4_amount[0].value = ip_invperiod4;
    $("#textinvperiod4").html(numberWithCommas(ip_invperiod4));
    recalcTOTFINEXPRIN4();
    
@@ -759,17 +786,17 @@ $rentalrate4_amount.on('input', function() {
 $opex4_amount.on('input', function() {  
   ip_opex4 = this.value * 1;
    $("#textopex4").html(numberWithCommas(ip_opex4));
-   var opexmgmt4 = $opexmgmt4_amount[0].value = "";
+   ip_opexmgmt4 = $opexmgmt4_amount[0].value = 0;
    $("#textopexmgmt4").html("");
-   var opexmaint4 = $opexmaint4_amount[0].value = "";
+   ip_opexmaint4 = $opexmaint4_amount[0].value = 0;
    $("#textopexmaint4").html("");
-   var opextax4 = $opextax4_amount[0].value = "";
+   ip_opextax4 = $opextax4_amount[0].value = 0;
    $("#textopextax4").html("");
-   var opexinsure4 = $opexinsure4_amount[0].value = "";
+   ip_opexinsure4 = $opexinsure4_amount[0].value = 0;
    $("#textopexinsure4").html("");
-   var opexutil4 = $opexutil4_amount[0].value = "";
+   ip_opexutil4 = $opexutil4_amount[0].value = 0;
    $("#textopexutil4").html("");
-   var opexagentfee4 = $opexagentfee4_amount[0].value = "";
+   ip_opexagentfee4 = $opexagentfee4_amount[0].value = 0;
    $("#textopexagentfee4").html("");
    
 });
@@ -892,6 +919,7 @@ function recalcinterest_principal1() {
   $("#textfinexprin1").html(numberWithCommas(ip_finexprin1));
   $("#textfinexint1").html(numberWithCommas(ip_finexint1));
   recalcFINEX1();
+  recalcTOTFINEX1();
   recalcTOTFINEXPRIN1();
   recalcTOTCAPGAIN1();
 }
@@ -899,6 +927,10 @@ function recalcinterest_principal1() {
 function recalcFINEX1() {
   ip_finex1 = ip_finexprin1 + ip_finexint1 + ip_finexother1;
   $("#textfinex1").html(numberWithCommas(ip_finex1));
+}
+
+function recalcTOTFINEX1() {
+  ip_totfinex1 = ip_finex1 * ip_invperiod1 * 12;
 }
 
 function recalcFINEXONEOFF1() {
@@ -909,6 +941,8 @@ function recalcFINEXONEOFF1() {
 function recalcTOTFINEXPRIN1() {
   ip_totfinexprin1 = ip_finexprin1 * ip_invperiod1 * 12;
   $("#texttotfinexprin1").html(numberWithCommas(ip_totfinexprin1));
+  op_mb1 = ip_loan1 - ip_totfinexprin1;
+  $("#textmb1").html(numberWithCommas(op_mb1));
   recalcTOTEQUITY1();
 }
 
@@ -921,7 +955,7 @@ function recalcTOTCAPGAIN1() {
 }
 
 function recalcTOTEQUITY1() {
-  ip_totequity1 = (ip_totfinexprin1 + ip_dp1 + ip_totcapgain1);
+  ip_totequity1 = (ip_totfinexprin1 + ip_dp1 + ip_totcapgain1);  //this is exactly the same as 'sales proceeds' 
   $("#texttotequity1").html(numberWithCommas(parseFloat(ip_totequity1).toFixed(0)));
 }
 
@@ -937,11 +971,10 @@ function recalcNOI1() {
 
 function recalcCF1() {
   op_cf1 = Math.round((ip_gi1-ip_opex1-ip_finex1)*12);
-  op_totcf1 = Math.round((ip_gi1-ip_opex1-ip_finex1)*12*ip_invperiod1-ip_finexacquireoneoff1-ip_finexdisposeoneoff1);
+  op_totcf1 = Math.round(op_cf1*ip_invperiod1-ip_finexacquireoneoff1-ip_finexdisposeoneoff1);
   $("#textcf1").html(numberWithCommas(op_cf1));
   $("#texttotcf1").html(numberWithCommas(op_totcf1));
 
-  op_mb1 = ip_loan1 - ip_totfinexprin1;
   op_sp1 = Math.round(ip_fv1 - op_mb1);  // this can be understood as 'equity'
   $("#textsp1").html(numberWithCommas(op_sp1));
 
@@ -972,8 +1005,8 @@ function recalcCOC1_FirstYear() {
 function recalcCOC1_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
-  op_coc1_invperiod = op_sp1/(-op_totcf1 + ip_dp1) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
-  $("#textcoc1_invperiod").html((parseFloat(op_coc1_invperiod).toFixed(1)));
+  op_coc1_invperiod = op_sp1/(ip_dp1 + ip_opex1 + ip_totfinex1 + ip_finexoneoff1) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
+  $("#textcoc1_invperiod").html(parseFloat(op_coc1_invperiod).toFixed(1));
 }
 
 function recalcROE1_FirstYear() {
@@ -985,12 +1018,83 @@ function recalcROE1_INVPERIOD() {
   op_roe1_invperiod = (op_cf1*ip_invperiod1) / op_sp1 *100;
   $("#textroe1_invperiod").html(numberWithCommas(parseFloat(op_roe1_invperiod).toFixed(1)));
 }
+
+
+function recalcROI1() {
+  op_roi1 = ((op_totcf1 + (ip_fv1 - ip_purchaseprice1) - ip_dp1)  / ((ip_opex1+ip_finex1) * 12 * ip_invperiod1 + ip_finexacquireoneoff1 + ip_finexdisposeoneoff1 + ip_dp1)) * 100;
+  $("#textroi1").html(numberWithCommas(parseFloat(op_roi1).toFixed(1)));
+}
+
+function recalcCR1() {
+  op_cr1 = (op_noi1 / ip_purchaseprice1)*100;
+  $("#textcr1").html(numberWithCommas(parseFloat(op_cr1).toFixed(1)));
+}
+
+function recalcIRR1() {
+  const f = (op_irr1) => ((op_cf1 * (1 - Math.pow(1 + op_irr1, - ip_invperiod1)) / op_irr1) - (ip_dp1 + ip_finexacquireoneoff1) + ((op_sp1 - ip_finexdisposeoneoff1) / Math.pow(1 + op_irr1, ip_invperiod1)));  // calculates net present value after deducting initial investment, which are downpayment and total one off finex
+  // npv = present value of my operating cashflow - initial cash invested + present value of capital gain
+  op_irr1 = 0.00001;
+
+  // Step 1: Calculate NPV for rate = 0, if negative, then exit function.
+  const npvAtZeroRate = f(op_irr1);
+  
+  if (npvAtZeroRate < 0) {
+    op_irr1 = 0; // NPV is negative, so IRR is effectively 0
+    op_irrnpv1 = npvAtZeroRate; 
+    $("#textirr1").html(op_irr1);
+    //$("#textirrnpv1").html(numberWithCommas(parseFloat(op_irrnpv1).toFixed(0)));  // can use this line to find out how negative the number is and how near it is to getting to zero.
+    op_irrnpvLogicText1 = "Converged";
+    $("#textirrnpv1").html(op_irrnpvLogicText1);
+    return;
+  }
+
+  // Step 2: There is a solution for discount rate. Use halving method for IRR calculation
+  let irrl = 0.00001;
+  let irrh = 0.05;
+
+  // first step is to find out an initial discount rate that will give negative npv
+  let npv = 500;
+  op_irr1 = 0.05; 
+  while ((npv) > 0) {
+    npv = f(op_irr1);
+    if (npv > 0) {
+      op_irr1 = op_irr1 + 0.05;
+    } else {
+      irrh = op_irr1;
+    }
+  }
+
+  op_irr1 = irrl; // reset to a low irr 
+  while ((irrh-irrl)>0.0001) { // Stop when step is very small i.e. 0.1%
+    npv = f(op_irr1);
+      if (npv > 0 && npv < 2000) {   //$2000 is tolerance
+        op_irrnpv1 = npv; // IRR found within tolerance
+        $("#textirr1").html(parseFloat(op_irr1*100).toFixed(1));
+        op_irrnpvLogicText1 = "Converged";
+        $("#textirrnpv1").html(op_irrnpvLogicText1);
+        irrl = 0.00001;
+        irrh = 0.05;
+        npv = 500;
+        return;
+      } else if (npv > 0) {
+        irrl = op_irr1;
+      } else {
+        irrh = op_irr1;
+      }
+    op_irr1 = (irrh+irrl)/2;
+    }
+    console.log("i got here without converging");
+    op_irrnpvLogicText1 = "Not Converged";
+    $("#textirrnpv1").html(op_irrnpvLogicText1);
+    }
+
 function recalcInput1() {
   recalcGI1();
   recalcOPEX1();
   recalcloan_DP1();
   recalcinterest_principal1();
   recalcFINEX1();
+  recalcTOTFINEX1();
   recalcFINEXONEOFF1();
   recalcTOTFINEXPRIN1();
   recalcTOTCAPGAIN1();
@@ -1008,6 +1112,9 @@ function recalcOutput1() {
   recalcCOC1_INVPERIOD();
   recalcROE1_FirstYear();
   recalcROE1_INVPERIOD();
+  recalcROI1();
+  recalcCR1();
+  recalcIRR1();
 }
 // --------------------------------------------------------
 // PROPERTY 2 OUTPUT FUNCTION
@@ -1041,6 +1148,7 @@ function recalcinterest_principal2() {
   $("#textfinexprin2").html(numberWithCommas(ip_finexprin2));
   $("#textfinexint2").html(numberWithCommas(ip_finexint2));
   recalcFINEX2();
+  recalcTOTFINEX2();
   recalcTOTFINEXPRIN2();
   recalcTOTCAPGAIN2();
 }
@@ -1048,6 +1156,10 @@ function recalcinterest_principal2() {
 function recalcFINEX2() {
   ip_finex2 = ip_finexprin2 + ip_finexint2 + ip_finexother2;
   $("#textfinex2").html(numberWithCommas(ip_finex2));
+}
+
+function recalcTOTFINEX2() {
+  ip_totfinex2 = ip_finex2 * ip_invperiod2 * 12;
 }
 
 function recalcFINEXONEOFF2() {
@@ -1059,6 +1171,8 @@ function recalcFINEXONEOFF2() {
 function recalcTOTFINEXPRIN2() {
   ip_totfinexprin2 = ip_finexprin2 * ip_invperiod2 * 12;
   $("#texttotfinexprin2").html(numberWithCommas(ip_totfinexprin2));
+  op_mb2 = ip_loan2 - ip_totfinexprin2;
+  $("#textmb2").html(numberWithCommas(op_mb2));
   recalcTOTEQUITY2();
 }
 
@@ -1089,18 +1203,16 @@ function recalcNOI2() {
 
 function recalcCF2() {
   op_cf2 = Math.round((ip_gi2-ip_opex2-ip_finex2)*12);
-  op_totcf2 = Math.round((ip_gi2-ip_opex2-ip_finex2)*12*ip_invperiod2-ip_finexacquireoneoff2-ip_finexdisposeoneoff2);
+  op_totcf2 = Math.round(op_cf2*ip_invperiod2-ip_finexacquireoneoff2-ip_finexdisposeoneoff2);
   $("#textcf2").html(numberWithCommas(op_cf2));
   $("#texttotcf2").html(numberWithCommas(op_totcf2));
 
-  op_mb2 = ip_loan2 - ip_totfinexprin2;
   op_sp2 = Math.round(ip_fv2 - op_mb2);
   $("#textsp2").html(numberWithCommas(op_sp2));
 
   op_totcb2 = Math.round(op_sp2 + op_totcf2);
   $("#texttotcb2").html(numberWithCommas(op_totcb2));
 }
-
 
 function recalcRY2() {
   op_ry2 = op_noi2 / ip_purchaseprice2 * 100;
@@ -1125,10 +1237,9 @@ function recalcCOC2_FirstYear() {
 function recalcCOC2_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
-  op_coc2_invperiod = op_sp2/(-op_totcf2 + ip_dp2) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
+  op_coc2_invperiod = op_sp2/(ip_dp2 + ip_opex2 + ip_totfinex2 + ip_finexoneoff2) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
   $("#textcoc2_invperiod").html(numberWithCommas(parseFloat(op_coc2_invperiod).toFixed(1)));
 }
-
 
 function recalcROE2_FirstYear() {
   op_roe2_firstyear = op_cf2/ip_dp2*100;  
@@ -1140,17 +1251,85 @@ function recalcROE2_INVPERIOD() {
   $("#textroe2_invperiod").html(numberWithCommas(parseFloat(op_roe2_invperiod).toFixed(1)));
 }
 
+function recalcROI2() {
+  op_roi2 = ((op_totcf2 + (ip_fv2 - ip_purchaseprice2) - ip_dp2)  / ((ip_opex2+ip_finex2) * 12 * ip_invperiod2 + ip_finexacquireoneoff2 + ip_finexdisposeoneoff2 + ip_dp2)) * 100;
+  $("#textroi2").html(numberWithCommas(parseFloat(op_roi2).toFixed(1)));
+}
+
+function recalcCR2() {
+  op_cr2 = (op_noi2 / ip_purchaseprice2)*100;
+  $("#textcr2").html(numberWithCommas(parseFloat(op_cr2).toFixed(1)));
+}
+
+function recalcIRR2() {
+  const f = (op_irr2) => ((op_cf2 * (1 - Math.pow(1 + op_irr2, - ip_invperiod2)) / op_irr2) - (ip_dp2 + ip_finexacquireoneoff2) + ((op_sp2 - ip_finexdisposeoneoff2) / Math.pow(1 + op_irr2, ip_invperiod2)));  // calculates net present value after deducting initial investment, which are downpayment and total one off finex
+  // npv = present value of my operating cashflow - initial cash invested + present value of capital gain
+  op_irr2 = 0.00001;
+
+  // Step 2: Calculate NPV for rate = 0, if negative, then exit function.
+  const npvAtZeroRate = f(op_irr2);
+  
+  if (npvAtZeroRate < 0) {
+    op_irr2 = 0; // NPV is negative, so IRR is effectively 0
+    op_irrnpv2 = npvAtZeroRate; 
+    $("#textirr2").html(op_irr2);
+    op_irrnpvLogicText2 = "Converged";
+    $("#textirrnpv2").html(op_irrnpvLogicText2);
+    return;
+  }
+
+  // Step 2: There is a solution for discount rate. Use halving method for IRR calculation
+  let irrl = 0.00001;
+  let irrh = 0.05;
+
+  // first step is to find out an initial discount rate that will give negative npv
+  let npv = 500;
+  op_irr2 = 0.05; 
+  while ((npv) > 0) {
+    npv = f(op_irr2);
+    if (npv > 0) {
+      op_irr2 = op_irr2 + 0.05;
+    } else {
+      irrh = op_irr2;
+    }
+  }
+
+  op_irr2 = irrl; // reset to a low irr 
+  while ((irrh-irrl)>0.0001) { // Stop when step is very small i.e. 0.1%
+    npv = f(op_irr2);
+    if (npv > 0 && npv < 2000) {   //$2000 is tolerance
+      op_irrnpv2 = npv; // IRR found within tolerance
+      $("#textirr2").html(parseFloat(op_irr2*100).toFixed(1));
+      op_irrnpvLogicText2 = "Converged";
+      $("#textirrnpv2").html(op_irrnpvLogicText2);
+      irrl = 0.00001;
+      irrh = 0.05;
+      npv = 500;
+      return;
+    } else if (npv > 0) {
+      irrl = op_irr2;
+    } else {
+      irrh = op_irr2;
+    }
+    op_irr2 = (irrh+irrl)/2;
+  }
+    console.log("i got here without converging");
+    op_irrnpvLogicText2 = "Not Converged";
+    $("#textirrnpv2").html(op_irrnpvLogicText2);
+}
+
+
 function recalcInput2() {
   recalcGI2();
   recalcOPEX2();
   recalcloan_DP2();
   recalcinterest_principal2();
   recalcFINEX2();
+  recalcTOTFINEX2();
   recalcFINEXONEOFF2();
   recalcTOTFINEXPRIN2();
   recalcTOTCAPGAIN2();
-  recalcTOTEQUITY2();
-}
+  recalcTOTEQUITY2();}
 
 function recalcOutput2() {
   recalcGRM2();
@@ -1163,6 +1342,9 @@ function recalcOutput2() {
   recalcCOC2_INVPERIOD();
   recalcROE2_FirstYear();
   recalcROE2_INVPERIOD();
+  recalcROI2();
+  recalcCR2();
+  recalcIRR2();
 }
 
 // --------------------------------------------------------
@@ -1197,6 +1379,7 @@ function recalcinterest_principal3() {
   $("#textfinexprin3").html(numberWithCommas(ip_finexprin3));
   $("#textfinexint3").html(numberWithCommas(ip_finexint3));
   recalcFINEX3();
+  recalcTOTFINEX3();
   recalcTOTFINEXPRIN3();
   recalcTOTCAPGAIN3();
 }
@@ -1204,6 +1387,10 @@ function recalcinterest_principal3() {
 function recalcFINEX3() {
   ip_finex3 = ip_finexprin3 + ip_finexint3 + ip_finexother3;
   $("#textfinex3").html(numberWithCommas(ip_finex3));
+}
+
+function recalcTOTFINEX3() {
+  ip_totfinex3 = ip_finex3 * ip_invperiod3 * 12;
 }
 
 function recalcFINEXONEOFF3() {
@@ -1214,6 +1401,8 @@ function recalcFINEXONEOFF3() {
 function recalcTOTFINEXPRIN3() {
   ip_totfinexprin3 = ip_finexprin3 * ip_invperiod3 * 12;
   $("#texttotfinexprin3").html(numberWithCommas(ip_totfinexprin3));
+  op_mb3 = ip_loan3 - ip_totfinexprin3;
+  $("#textmb3").html(numberWithCommas(op_mb3));
   recalcTOTEQUITY3();
 }
 
@@ -1242,18 +1431,16 @@ function recalcNOI3() {
 
 function recalcCF3() {
   op_cf3 = Math.round((ip_gi3-ip_opex3-ip_finex3)*12);
-  op_totcf3 = Math.round((ip_gi3-ip_opex3-ip_finex3)*12*ip_invperiod3-ip_finexacquireoneoff3-ip_finexdisposeoneoff3);
+  op_totcf3 = Math.round(op_cf3*ip_invperiod3-ip_finexacquireoneoff3-ip_finexdisposeoneoff3);
   $("#textcf3").html(numberWithCommas(op_cf3));
   $("#texttotcf3").html(numberWithCommas(op_totcf3));
 
-  op_mb3 = ip_loan3 - ip_totfinexprin3;
   op_sp3 = Math.round(ip_fv3 - op_mb3);
   $("#textsp3").html(numberWithCommas(op_sp3));
 
   op_totcb3 = Math.round(op_sp3 + op_totcf3);
   $("#texttotcb3").html(numberWithCommas(op_totcb3));
 }
-
 
 function recalcRY3() {
   op_ry3 = op_noi3 / ip_purchaseprice3 * 100;
@@ -1278,7 +1465,7 @@ function recalcCOC3_FirstYear() {
 function recalcCOC3_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
-  op_coc3_invperiod = op_sp3/(-op_totcf3 + ip_dp3) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
+  op_coc3_invperiod = op_sp3/(ip_dp3 + ip_opex3 + ip_totfinex3 + ip_finexoneoff3) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
   $("#textcoc3_invperiod").html(numberWithCommas(parseFloat(op_coc3_invperiod).toFixed(1)));
 }
 
@@ -1292,12 +1479,80 @@ function recalcROE3_INVPERIOD() {
   $("#textroe3_invperiod").html(numberWithCommas(parseFloat(op_roe3_invperiod).toFixed(1)));
 }
 
+function recalcROI3() {
+  op_roi3 = ((op_totcf3 + (ip_fv3 - ip_purchaseprice3) - ip_dp3)  / ((ip_opex3 + ip_finex3) * 12 * ip_invperiod3 + ip_finexacquireoneoff3 + ip_finexdisposeoneoff3 + ip_dp3)) * 100;
+  $("#textroi3").html(numberWithCommas(parseFloat(op_roi3).toFixed(1)));
+}
+
+function recalcCR3() {
+  op_cr3 = (op_noi3 / ip_purchaseprice3)*100;
+  $("#textcr3").html(numberWithCommas(parseFloat(op_cr3).toFixed(1)));
+}
+
+function recalcIRR3() {
+  const f = (op_irr3) => ((op_cf3 * (1 - Math.pow(1 + op_irr3, - ip_invperiod3)) / op_irr3) - (ip_dp3 + ip_finexacquireoneoff3) + ((op_sp3 - ip_finexdisposeoneoff3) / Math.pow(1 + op_irr3, ip_invperiod3)));  // calculates net present value after deducting initial investment, which are downpayment and total one off finex
+  // npv = present value of my operating cashflow - initial cash invested + present value of capital gain
+  op_irr3 = 0.00001;
+
+  // Step 3: Calculate NPV for rate = 0, if negative, then exit function.
+  const npvAtZeroRate = f(op_irr3);
+  
+  if (npvAtZeroRate < 0) {
+    op_irr3 = 0; // NPV is negative, so IRR is effectively 0
+    op_irrnpv3 = npvAtZeroRate; 
+    $("#textirr3").html(op_irr3);
+    op_irrnpvLogicText3 = "Converged";
+    $("#textirrnpv3").html(op_irrnpvLogicText3);
+    return;
+  }
+
+  // Step 2: There is a solution for discount rate. Use halving method for IRR calculation
+  let irrl = 0.00001;
+  let irrh = 0.05;
+
+  // first step is to find out an initial discount rate that will give negative npv
+  let npv = 500;
+  op_irr3 = 0.05; 
+  while ((npv) > 0) {
+    npv = f(op_irr3);
+    if (npv > 0) {
+      op_irr3 = op_irr3 + 0.05;
+    } else {
+      irrh = op_irr3;
+    }
+  }
+
+  op_irr3 = irrl; // reset to a low irr 
+  while ((irrh-irrl)>0.0001) { // Stop when step is very small i.e. 0.1%
+    npv = f(op_irr3);
+    if (npv > 0 && npv < 2000) {   //$2000 is tolerance
+      op_irrnpv3 = npv; // IRR found within tolerance
+      $("#textirr3").html(parseFloat(op_irr3*100).toFixed(1));
+      op_irrnpvLogicText3 = "Converged";
+      $("#textirrnpv3").html(op_irrnpvLogicText3);
+      irrl = 0.00001;
+      irrh = 0.05;
+      npv = 500;
+      return;
+    } else if (npv > 0) {
+      irrl = op_irr3;
+    } else {
+      irrh = op_irr3;
+    }
+    op_irr3 = (irrh+irrl)/2;
+  }
+    console.log("i got here without converging");
+    op_irrnpvLogicText3 = "Not Converged";
+    $("#textirrnpv3").html(op_irrnpvLogicText3);
+}
+
 function recalcInput3() {
   recalcGI3();
   recalcOPEX3();
   recalcloan_DP3();
   recalcinterest_principal3();
   recalcFINEX3();
+  recalcTOTFINEX3();
   recalcFINEXONEOFF3();
   recalcTOTFINEXPRIN3();
   recalcTOTCAPGAIN3();
@@ -1315,6 +1570,9 @@ function recalcOutput3() {
   recalcCOC3_INVPERIOD();
   recalcROE3_FirstYear();
   recalcROE3_INVPERIOD();
+  recalcROI3();
+  recalcCR3();
+  recalcIRR3();
 }
 
 // --------------------------------------------------------
@@ -1349,6 +1607,7 @@ function recalcinterest_principal4() {
   $("#textfinexprin4").html(numberWithCommas(ip_finexprin4));
   $("#textfinexint4").html(numberWithCommas(ip_finexint4));
   recalcFINEX4();
+  recalcTOTFINEX4();
   recalcTOTFINEXPRIN4();
   recalcTOTCAPGAIN4();
 }
@@ -1356,6 +1615,10 @@ function recalcinterest_principal4() {
 function recalcFINEX4() {
   ip_finex4 = ip_finexprin4 + ip_finexint4 + ip_finexother4;
   $("#textfinex4").html(numberWithCommas(ip_finex4));
+}
+
+function recalcTOTFINEX4() {
+  ip_totfinex4 = ip_finex4 * ip_invperiod4 * 12;
 }
 
 function recalcFINEXONEOFF4() {
@@ -1367,6 +1630,8 @@ function recalcFINEXONEOFF4() {
 function recalcTOTFINEXPRIN4() {
   ip_totfinexprin4 = ip_finexprin4 * ip_invperiod4 * 12;
   $("#texttotfinexprin4").html(numberWithCommas(ip_totfinexprin4));
+  op_mb4 = ip_loan4 - ip_totfinexprin4;
+  $("#textmb4").html(numberWithCommas(op_mb4));
   recalcTOTEQUITY4();
 }
 
@@ -1396,18 +1661,16 @@ function recalcNOI4() {
 
 function recalcCF4() {
   op_cf4 = Math.round((ip_gi4-ip_opex4-ip_finex4)*12);
-  op_totcf4 = Math.round((ip_gi4-ip_opex4-ip_finex4)*12*ip_invperiod4-ip_finexacquireoneoff4-ip_finexdisposeoneoff4);
+  op_totcf4 = Math.round(op_cf4*ip_invperiod4-ip_finexacquireoneoff4-ip_finexdisposeoneoff4);
   $("#textcf4").html(numberWithCommas(op_cf4));
   $("#texttotcf4").html(numberWithCommas(op_totcf4));
 
-  op_mb4 = ip_loan4 - ip_totfinexprin4;
   op_sp4 = Math.round(ip_fv4 - op_mb4);
   $("#textsp4").html(numberWithCommas(op_sp4));
 
   op_totcb4 = Math.round(op_sp4 + op_totcf4);
   $("#texttotcb4").html(numberWithCommas(op_totcb4));
 }
-
 
 function recalcRY4() {
   op_ry4 = op_noi4 / ip_purchaseprice4 * 100;
@@ -1432,7 +1695,7 @@ function recalcCOC4_FirstYear() {
 function recalcCOC4_INVPERIOD() {
   //net outflow before tax = downpayment, opex, finex, i.e. all the cash committed.
   //net inflow before tax = future market value - o/s loan, i.e. all the cash that will return include downpayment
-  op_coc4_invperiod = op_sp4/(-op_totcf4 + ip_dp4) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
+  op_coc4_invperiod = op_sp4/(ip_dp4 + ip_opex4 + ip_totfinex4 + ip_finexoneoff4) *100; // denominator should be downpayment plus any excess cash committed or returned during the investment. if cash flow is large, then coc will turn negative. A big negative coc means sales proceeds outweight the cash income and a small negative means a high cash income.
   $("#textcoc4_invperiod").html(numberWithCommas(parseFloat(op_coc4_invperiod).toFixed(1)));
 }
 
@@ -1447,12 +1710,80 @@ function recalcROE4_INVPERIOD() {
   $("#textroe4_invperiod").html(numberWithCommas(parseFloat(op_roe4_invperiod).toFixed(1)));
 }
 
+function recalcROI4() {
+  op_roi4 = ((op_totcf4 + (ip_fv4 - ip_purchaseprice4) - ip_dp4)  / ((ip_opex4 + ip_finex4) * 12 * ip_invperiod4 + ip_finexacquireoneoff4 + ip_finexdisposeoneoff4 + ip_dp4)) * 100;
+  $("#textroi4").html(numberWithCommas(parseFloat(op_roi4).toFixed(1)));
+}
+
+function recalcCR4() {
+  op_cr4 = (op_noi4 / ip_purchaseprice4)*100;
+  $("#textcr4").html(numberWithCommas(parseFloat(op_cr4).toFixed(1)));
+}
+
+function recalcIRR4() {
+  const f = (op_irr4) => ((op_cf4 * (1 - Math.pow(1 + op_irr4, - ip_invperiod4)) / op_irr4) - (ip_dp4 + ip_finexacquireoneoff4) + ((op_sp4 - ip_finexdisposeoneoff4) / Math.pow(1 + op_irr4, ip_invperiod4)));  // calculates net present value after deducting initial investment, which are downpayment and total one off finex
+  // npv = present value of my operating cashflow - initial cash invested + present value of capital gain
+  op_irr4 = 0.00001;
+
+  // Step 4: Calculate NPV for rate = 0, if negative, then exit function.
+  const npvAtZeroRate = f(op_irr4);
+  
+  if (npvAtZeroRate < 0) {
+    op_irr4 = 0; // NPV is negative, so IRR is effectively 0
+    op_irrnpv4 = npvAtZeroRate; 
+    $("#textirr4").html(op_irr4);
+    op_irrnpvLogicText4 = "Converged";
+    $("#textirrnpv4").html(op_irrnpvLogicText4);
+    return;
+  }
+
+  // Step 2: There is a solution for discount rate. Use halving method for IRR calculation
+  let irrl = 0.00001;
+  let irrh = 0.05;
+
+  // first step is to find out an initial discount rate that will give negative npv
+  let npv = 500;
+  op_irr4 = 0.05; 
+  while ((npv) > 0) {
+    npv = f(op_irr4);
+    if (npv > 0) {
+      op_irr4 = op_irr4 + 0.05;
+    } else {
+      irrh = op_irr4;
+    }
+  }
+
+  op_irr4 = irrl; // reset to a low irr 
+  while ((irrh-irrl)>0.0001) { // Stop when step is very small i.e. 0.1%
+    npv = f(op_irr4);
+    if (npv > 0 && npv < 2000) {   //$2000 is tolerance
+      op_irrnpv4 = npv; // IRR found within tolerance
+      $("#textirr4").html(parseFloat(op_irr4*100).toFixed(1));
+      op_irrnpvLogicText4 = "Converged";
+      $("#textirrnpv4").html(op_irrnpvLogicText4);
+      irrl = 0.00001;
+      irrh = 0.05;
+      npv = 500;
+      return;
+    } else if (npv > 0) {
+      irrl = op_irr4;
+    } else {
+      irrh = op_irr4;
+    }
+    op_irr4 = (irrh+irrl)/2;
+  }
+    console.log("i got here without converging");
+    op_irrnpvLogicText4 = "Not Converged";
+    $("#textirrnpv4").html(op_irrnpvLogicText4);
+}
+
 function recalcInput4() {
   recalcGI4();
   recalcOPEX4();
   recalcloan_DP4();
   recalcinterest_principal4();
   recalcFINEX4();
+  recalcTOTFINEX4();
   recalcFINEXONEOFF4();
   recalcTOTFINEXPRIN4();
   recalcTOTCAPGAIN4();
@@ -1470,6 +1801,9 @@ function recalcOutput4() {
   recalcCOC4_INVPERIOD();
   recalcROE4_FirstYear();
   recalcROE4_INVPERIOD();
+  recalcROI4();
+  recalcCR4();
+  recalcIRR4();
 }
 
 // --------------------------------------
@@ -1520,13 +1854,13 @@ function duplicate1(){
   ip_invperiod1 = window[invperiodVarName];
   ip_vacantrate1 = window[vacantrateVarName];
   ip_rentalrate1 = window[rentalrateVarName];
-  ip_opex1 = window[opexVarName];
   ip_opexmgmt1 = window[opexmgmtVarName];
   ip_opexmaint1 = window[opexmaintVarName];
   ip_opextax1 = window[opextaxVarName];
   ip_opexinsure1 = window[opexinsureVarName];
   ip_opexutil1 = window[opexutilVarName];
   ip_opexagentfee1 = window[opexagentfeeVarName];
+  ip_opex1 = window[opexVarName];
   ip_finex1 = window[finexVarName];
   ip_finexprin1 = window[finexprinVarName];
   ip_finexint1 = window[finexintVarName];
@@ -1628,13 +1962,13 @@ function duplicate2(){
   ip_invperiod2 = window[invperiodVarName];
   ip_vacantrate2 = window[vacantrateVarName];
   ip_rentalrate2 = window[rentalrateVarName];
-  ip_opex2 = window[opexVarName];
   ip_opexmgmt2 = window[opexmgmtVarName];
   ip_opexmaint2 = window[opexmaintVarName];
   ip_opextax2 = window[opextaxVarName];
   ip_opexinsure2 = window[opexinsureVarName];
   ip_opexutil2 = window[opexutilVarName];
   ip_opexagentfee2 = window[opexagentfeeVarName];
+  ip_opex2 = window[opexVarName];
   ip_finex2 = window[finexVarName];
   ip_finexprin2 = window[finexprinVarName];
   ip_finexint2 = window[finexintVarName];
@@ -1736,13 +2070,13 @@ function duplicate3(){
   ip_invperiod3 = window[invperiodVarName];
   ip_vacantrate3 = window[vacantrateVarName];
   ip_rentalrate3 = window[rentalrateVarName];
-  ip_opex3 = window[opexVarName];
   ip_opexmgmt3 = window[opexmgmtVarName];
   ip_opexmaint3 = window[opexmaintVarName];
   ip_opextax3 = window[opextaxVarName];
   ip_opexinsure3 = window[opexinsureVarName];
   ip_opexutil3 = window[opexutilVarName];
   ip_opexagentfee3 = window[opexagentfeeVarName];
+  ip_opex3 = window[opexVarName];
   ip_finex3 = window[finexVarName];
   ip_finexprin3 = window[finexprinVarName];
   ip_finexint3 = window[finexintVarName];
@@ -1844,13 +2178,13 @@ function duplicate4(){
   ip_invperiod4 = window[invperiodVarName];
   ip_vacantrate4 = window[vacantrateVarName];
   ip_rentalrate4 = window[rentalrateVarName];
-  ip_opex4 = window[opexVarName];
   ip_opexmgmt4 = window[opexmgmtVarName];
   ip_opexmaint4 = window[opexmaintVarName];
   ip_opextax4 = window[opextaxVarName];
   ip_opexinsure4 = window[opexinsureVarName];
   ip_opexutil4 = window[opexutilVarName];
   ip_opexagentfee4 = window[opexagentfeeVarName];
+  ip_opex4 = window[opexVarName];
   ip_finex4 = window[finexVarName];
   ip_finexprin4 = window[finexprinVarName];
   ip_finexint4 = window[finexintVarName];
@@ -2017,16 +2351,16 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
       if (i==6){
       // Compare the values and change the font color to green for the minimum and maximum
       const maxValue = Math.max(op_coc1_firstyear, op_coc2_firstyear, op_coc3_firstyear, op_coc4_firstyear);
-      if (op_coc1_firstyear === maxValue || op_coc1_firstyear < 0) {
+      if (op_coc1_firstyear === maxValue) {
         cell1.style.color = 'green';
       }
-      if (op_coc2_firstyear === maxValue || op_coc2_firstyear < 0) {
+      if (op_coc2_firstyear === maxValue) {
         cell2.style.color = 'green';
       } 
-      if (op_coc3_firstyear === maxValue || op_coc3_firstyear < 0) {
+      if (op_coc3_firstyear === maxValue) {
         cell3.style.color = 'green';
       } 
-      if (op_coc4_firstyear === maxValue || op_coc4_firstyear < 0) {
+      if (op_coc4_firstyear === maxValue) {
         cell4.style.color = 'green';
       } 
     }
@@ -2034,16 +2368,16 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
     if (i==7){
       // Compare the values and change the font color to green for the minimum and maximum
       const maxValue = Math.max(op_coc1_invperiod, op_coc2_invperiod, op_coc3_invperiod, op_coc4_invperiod);
-      if (op_coc1_invperiod === maxValue || op_coc1_invperiod < 0) {
+      if (op_coc1_invperiod === maxValue) {
         cell1.style.color = 'green';
       }
-      if (op_coc2_invperiod === maxValue || op_coc2_invperiod < 0) {
+      if (op_coc2_invperiod === maxValue) {
         cell2.style.color = 'green';
       } 
-      if (op_coc3_invperiod === maxValue || op_coc3_invperiod < 0) {
+      if (op_coc3_invperiod === maxValue) {
         cell3.style.color = 'green';
       } 
-      if (op_coc4_invperiod === maxValue || op_coc4_invperiod < 0) {
+      if (op_coc4_invperiod === maxValue) {
         cell4.style.color = 'green';
       } 
     }
@@ -2082,7 +2416,24 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
       } 
     }
 
-      if (i==10){
+    if (i==10){
+      // Compare the values and change the font color to green for the minimum and maximum
+      const maxValue = Math.max(op_roi1, op_roi2, op_roi3, op_roi4);
+      if (op_roi1 === maxValue) {
+        cell1.style.color = 'green';
+      }
+      if (op_roi2 === maxValue) {
+        cell2.style.color = 'green';
+      } 
+      if (op_roi3 === maxValue) {
+        cell3.style.color = 'green';
+      } 
+      if (op_roi4 === maxValue) {
+        cell4.style.color = 'green';
+      } 
+    }
+
+    if (i==11){
         // Compare the values and change the font color to green for the minimum and maximum
         const maxValue = Math.max(op_ry1, op_ry2, op_ry3, op_ry4);
         if (op_ry1 === maxValue) {
@@ -2098,7 +2449,7 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
           cell4.style.color = 'green';
         } 
       }
-        if (i==11){
+        if (i==12){
         // Compare the values and change the font color to green for the minimum and maximum
         const minValue = Math.min(op_oer1, op_oer2, op_oer3, op_oer4);
         if (op_oer1 === minValue) {
@@ -2114,7 +2465,7 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
           cell4.style.color = 'green';
         } 
       }
-      if (i==12){
+      if (i==13){
       // Compare the values and change the font color to green for the minimum and maximum
       const maxValue = Math.max(op_gipsf1, op_gipsf2, op_gipsf3, op_gipsf4);
       if (op_gipsf1 === maxValue) {
@@ -2130,7 +2481,40 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
         cell4.style.color = 'green';
       } 
     }
-    
+    if (i==14){
+      // Compare the values and change the font color to green for the minimum and maximum
+      const maxValue = Math.max(op_cr1, op_cr2, op_cr3, op_cr4);
+      if (op_cr1 === maxValue) {
+        cell1.style.color = 'green';
+      }
+      if (op_cr2 === maxValue) {
+        cell2.style.color = 'green';
+      } 
+      if (op_cr3 === maxValue) {
+        cell3.style.color = 'green';
+      } 
+      if (op_cr4 === maxValue) {
+        cell4.style.color = 'green';
+      } 
+    }
+
+    if (i==15){
+      // Compare the values and change the font color to green for the minimum and maximum
+      
+      const maxValue = Math.max(op_irr1, op_irr2, op_irr3, op_irr4);
+      if (op_irr1 === maxValue) {
+        cell1.style.color = 'green';
+      }
+      if (op_irr2 === maxValue) {
+        cell2.style.color = 'green';
+      } 
+      if (op_irr3 === maxValue) {
+        cell3.style.color = 'green';
+      } 
+      if (op_irr4 === maxValue) {
+        cell4.style.color = 'green';
+      } 
+    }
   }
 
 
@@ -2141,6 +2525,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const inputTable = document.getElementById('inputTable');
 const saveButton = document.getElementById('saveData');
 const retrieveButton = document.getElementById('retrieveData');
+const generateReportButton = document.getElementById('generateReport');
 
   // Add click event listener to the save button
   saveButton.addEventListener('click', () => {
@@ -2198,4 +2583,86 @@ const retrieveButton = document.getElementById('retrieveData');
     // Alert to indicate successful clearing (you can customize this message)
     alert('Data cleared successfully!');
   });
+
+// Add click event listener to the generate Report button
+generateReportButton.addEventListener('click', () => {
+  // Create a new jsPDF instance
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  // Get the user-specified filename from the input field
+  const reportfilename = document.getElementById('reportfilenameInput').value || 'InvestmentReport';
+  doc.text("Investment Analysis for " + reportfilename, 20, 10);
+            // Create a table
+            doc.autoTable({
+              startY: 20, // Y position where the table will start
+              head: [['Inputs', 'Option 1', 'Option 2', 'Option 3', 'Option 4']], // Table header
+              body: [
+                ['[1] Purchase Price $', ip_purchaseprice1, ip_purchaseprice2, ip_purchaseprice3, ip_purchaseprice4],
+                ['[1A] LTV %', ip_ltv1, ip_ltv2, ip_ltv3, ip_ltv4],
+                ['[1B] Loan $', ip_loan1, ip_loan2, ip_loan3, ip_loan4],
+                ['[1C] Downpayment $', ip_dp1, ip_dp2, ip_dp3, ip_dp4],
+                ['[1D] Loan Tenure (years)', ip_tenure1, ip_tenure2, ip_tenure3, ip_tenure4],
+                ['[1E] Interest Rate %', ip_intrate1, ip_intrate2, ip_intrate3, ip_intrate4],
+                ['[1F] Assumed Investment Period (years)', ip_invperiod1, ip_invperiod2, ip_invperiod3, ip_invperiod4],
+                ['[1G] Total Principal Paid', ip_totfinexprin1, ip_totfinexprin2, ip_totfinexprin3, ip_totfinexprin4],
+                ['[1H] Mortgage Balance', op_mb1, op_mb2, op_mb3, op_mb4],
+                ['[2] Occupancy Rate %', ip_vacantrate1, ip_vacantrate2, ip_vacantrate3, ip_vacantrate4],
+                ['[3] Rental Rate $/mth', ip_rentalrate1, ip_rentalrate2, ip_rentalrate3, ip_rentalrate4],
+                ['[4] Operating Expense $/mth', ip_opex1, ip_opex2, ip_opex3, ip_opex4],
+                ['[4A] OpEx - Prop. Management $/mth', ip_opexmgmt1, ip_opexmgmt2, ip_opexmgmt3, ip_opexmgmt4],
+                ['[4B] OpEx - Maintainence $/mth', ip_opexmaint1, ip_opexmaint2, ip_opexmaint3, ip_opexmaint4],
+                ['[4C] OpEx - Property Tax $/mth', ip_opextax1, ip_opextax2, ip_opextax3, ip_opextax4],
+                ['[4D] OpEx - Insurance $/mth', ip_opexinsure1, ip_opexinsure2, ip_opexinsure3, ip_opexinsure4],
+                ['[4E] OpEx - Utilities $/mth', ip_opexutil1, ip_opexutil2, ip_opexutil3, ip_opexutil4],
+                ['[4F] OpEx - Agent Fee $/mth', ip_opexagentfee1, ip_opexagentfee2, ip_opexagentfee3, ip_opexagentfee4],
+                ['[5] Financing Expense, Running $/mth', ip_finex1, ip_finex2, ip_finex3, ip_finex4],
+                ['[5A] FinEx - Mortgage Principal $/mth', ip_finexprin1, ip_finexprin2, ip_finexprin3, ip_finexprin4],
+                ['[5B] FinEx - Mortgage Interest $/mth', ip_finexint1, ip_finexint2, ip_finexint3, ip_finexint4],
+                ['[5C] FinEx - Mortgage Total $/mth', ip_finexmort1, ip_finexmort2, ip_finexmort3, ip_finexmort4],
+                ['[5D] FinEx - Others $/mth', ip_finexother1, ip_finexother2, ip_finexother3, ip_finexother4],
+                ['[6] Financing Expense, One-Off $', ip_finexoneoff1, ip_finexoneoff2, ip_finexoneoff3, ip_finexoneoff4],
+                ['[6A] Costs to Acquire Property $', ip_finexacquireoneoff1, ip_finexacquireoneoff2, ip_finexacquireoneoff3, ip_finexacquireoneoff4],
+                ['[6B] Costs to Dispose Property $', ip_finexdisposeoneoff1, ip_finexdisposeoneoff2, ip_finexdisposeoneoff3, ip_finexdisposeoneoff4],
+                ['[7] Gross Income $/mth', ip_gi1, ip_gi2, ip_gi3, ip_gi4],
+                ['[8] Total Equity $ at end of investment period', ip_totequity1, ip_totequity2, ip_totequity3, ip_totequity4],
+                ['[8A] Capital Gain or Depreciation $ at end of investment period', ip_totcapgain1, ip_totcapgain2, ip_totcapgain3, ip_totcapgain4],
+                ['[8A] Future Value $ at end of investment period', ip_fv1, ip_fv2, ip_fv3, ip_fv4],
+                ['[9] Floor Area', ip_area1, ip_area2, ip_area3, ip_area4],
+              ],
+            });
+            doc.autoTable({
+              startY: doc.lastAutoTable.finalY + 20, // Y position for the second table (below the first one)
+              head: [['Calculated Metrics', 'Option 1', 'Option 2', 'Option 3', 'Option 4']], // Table header
+              body: [
+                ['[1] Gross Rent Multiplier (GRM)', op_grm1, op_grm2, op_grm3, op_grm4],
+                ['[2] Net Operating Income (NOI)', op_noi1, op_noi2, op_noi3, op_noi4],
+                ['[3] Cash Flow Balance', parseFloat(op_cf1).toFixed(1), parseFloat(op_cf2).toFixed(1), parseFloat(op_cf3).toFixed(1), parseFloat(op_cf4).toFixed(1)],
+                  ['[3] Sales Proceeds', parseFloat(op_sp1).toFixed(1), parseFloat(op_sp2).toFixed(1), parseFloat(op_sp3).toFixed(1), parseFloat(op_sp4).toFixed(1)],
+                  ['[3] Cash Balance', parseFloat(op_totcb1).toFixed(1), parseFloat(op_totcb2).toFixed(1), parseFloat(op_totcb3).toFixed(1), parseFloat(op_totcb4).toFixed(1)],
+                  ['[4] Cash on Cash (CoC) - 1st Year', parseFloat(op_coc1_firstyear).toFixed(1), parseFloat(op_coc2_firstyear).toFixed(1), parseFloat(op_coc3_firstyear).toFixed(1), parseFloat(op_coc4_firstyear).toFixed(1)],
+                  ['[4] Cash on Cash (CoC) - Over Period', parseFloat(op_coc1_invperiod).toFixed(1), parseFloat(op_coc2_invperiod).toFixed(1), parseFloat(op_coc3_invperiod).toFixed(1), parseFloat(op_coc4_invperiod).toFixed(1)],
+                  ['[5] Return on Equity (RoE) - 1st Year', parseFloat(op_roe1_firstyear).toFixed(1), parseFloat(op_roe2_firstyear).toFixed(1), parseFloat(op_roe3_firstyear).toFixed(1), parseFloat(op_roe4_firstyear).toFixed(1)],
+                  ['[5] Return on Equity (RoE) - Over Period', parseFloat(op_roe1_invperiod).toFixed(1), parseFloat(op_roe2_invperiod).toFixed(1), parseFloat(op_roe3_invperiod).toFixed(1), parseFloat(op_roe4_invperiod).toFixed(1)],
+                  ['[6] Return on Investment (ROI)', parseFloat(op_roi1).toFixed(1), parseFloat(op_roi2).toFixed(1), parseFloat(op_roi3).toFixed(1), parseFloat(op_roi4).toFixed(1)],
+                  ['[7] Net Yield (Rental Yield)', parseFloat(op_ry1).toFixed(1), parseFloat(op_ry2).toFixed(1), parseFloat(op_ry3).toFixed(1), parseFloat(op_ry4).toFixed(1)],
+                  ['[8] Operating Expense Ratio (OER)', parseFloat(op_oer1).toFixed(1), parseFloat(op_oer2).toFixed(1), parseFloat(op_oer3).toFixed(1), parseFloat(op_oer4).toFixed(1)],
+                  ['[9] Gross Income psf', parseFloat(op_gipsf1).toFixed(1), parseFloat(op_gipsf2).toFixed(1), parseFloat(op_gipsf3).toFixed(1), parseFloat(op_gipsf4).toFixed(1)],
+                  ['[10] Capitalisation Rate', parseFloat(op_cr1).toFixed(1), parseFloat(op_cr2).toFixed(1), parseFloat(op_cr3).toFixed(1), parseFloat(op_cr4).toFixed(1)],
+                  ['[11] Internal Rate of Return (IRR)', parseFloat(op_irr1).toFixed(1), parseFloat(op_irr2).toFixed(1), parseFloat(op_irr3).toFixed(1), parseFloat(op_irr4).toFixed(1)],
+                ['[11] Internal Rate of Return (IRR) - Check', op_irrnpvLogicText1, op_irrnpvLogicText2, op_irrnpvLogicText3, op_irrnpvLogicText4],                  
+                  // Add more rows as needed
+              ],
+            });
+  
+  doc.save(reportfilename + '.pdf');  
 });
+
+});
+
+  
+
+function isNumber(value) {
+  return typeof value === 'number' && !isNaN(value) && value <= Number.MAX_VALUE;
+}
+
+// console.log(isNumber(xxxx)); // false
