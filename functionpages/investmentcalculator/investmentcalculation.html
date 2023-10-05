@@ -34,7 +34,7 @@
   <button id="saveData">Save Data</button>
   <button id="retrieveData">Retrieve Data</button>
   <button id="clearData">Clear Data</button>
-  <button id="refreshOutputCalcButton">Refresh</button>
+  <button id="refreshOutputCalcButton">Re-Calculate Output</button>
   <br>  
   <br>
   <label for="reportfilenameInput">Enter Client Name:</label>
@@ -331,6 +331,15 @@
           <td class="column6"><div><p style="font-size: 16px"><input class = "slidernum" type="number" style="width:80px" id="js-area3-input" value="1000" min="0" max="10000" step="10"></input> sqft</td>
           <td class="column7"><div><p style="font-size: 16px"><input class = "slidernum" type="number" style="width:80px" id="js-area4-input" value="1000" min="0" max="10000" step="10"></input> sqft</td>
         </tr>
+        <tr>
+          <td class="column1"><div><p style="font-size: 16px"><b>[10] Discount Rate %</b></td>
+          <td class="column2"><div><p style="font-size: 16px"> XXX</td>
+          <td class="column3"><div><p style="font-size: 16px"> XXX</td>
+          <td class="column4"><div><p style="font-size: 16px"><input class = "slidernum" type="number" style="width:50px" id="js-discountrate1-input" value="2" min="0" max="100" step="1"></input> %</td>
+          <td class="column5"><div><p style="font-size: 16px"><input class = "slidernum" type="number" style="width:50px" id="js-discountrate2-input" value="2" min="0" max="100" step="1"></input> %</td>
+          <td class="column6"><div><p style="font-size: 16px"><input class = "slidernum" type="number" style="width:50px" id="js-discountrate3-input" value="2" min="0" max="100" step="1"></input> %</td>
+          <td class="column7"><div><p style="font-size: 16px"><input class = "slidernum" type="number" style="width:50px" id="js-discountrate4-input" value="2" min="0" max="100" step="1"></input> %</td>
+        </tr>
       </table>
 
       <br>
@@ -366,27 +375,41 @@
               <td class="column7"><div><p style="font-size: 16px">$ <span id="textnoi4">10000 </span> /year</td>
             </tr>
             <tr>
-              <td class="column1" rowspan="3"><div><p style="font-size: 16px">[3] Cash Flow</td>
-              <td class="column2" rowspan="3"><div><p style="font-size: 16px"> Cash flow is NOI minus financing costs (such as mortgage payments, interest, loan fees) before income tax. Cash flow reflects the cash available to owner or for reinvestment. Total cash flow calculated inclusive of downpayment and one-off costs to acquire/dispose property. The higher the better.</td>
-              <td class="column3"><div><p style="font-size: 16px"> Cash Flow Balance</td>
-              <td class="column4"><div><p style="font-size: 16px">$ <span id="textcf1">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf1">10000 </span> total</td>
-              <td class="column5"><div><p style="font-size: 16px">$ <span id="textcf2">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf2">10000 </span> total</td>
-              <td class="column6"><div><p style="font-size: 16px">$ <span id="textcf3">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf3">10000 </span> total</td>
-              <td class="column7"><div><p style="font-size: 16px">$ <span id="textcf4">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf4">10000 </span> total</td>
+              <td class="column1" rowspan="5"><div><p style="font-size: 16px">[3] Cash Flow</td>
+              <td class="column2" rowspan="5"><div><p style="font-size: 16px"> Cash flow is NOI minus financing costs (such as mortgage payments, interest, loan fees) before income tax. Cash flow reflects the cash available to owner or for reinvestment. <p style="font-size: 16px; width: 400px">Cash Balance calculated inclusive of downpayment and one-off costs to acquire/dispose property. The higher the better.</td>
+                <td class="column3"><div><p style="font-size: 16px"> Initial Cash Position</td>
+                <td class="column4"><div><p style="font-size: 16px">$ <span id="texticp1">-100000 </span><div><p style="font-size: 16px"></td>
+                <td class="column5"><div><p style="font-size: 16px">$ <span id="texticp2">-100000 </span><div><p style="font-size: 16px"></td>
+                <td class="column6"><div><p style="font-size: 16px">$ <span id="texticp3">-100000 </span><div><p style="font-size: 16px"></td>
+                <td class="column7"><div><p style="font-size: 16px">$ <span id="texticp4">-100000 </span><div><p style="font-size: 16px"></td>
+            </tr>
+            <tr>
+              <td class="column3"><div><p style="font-size: 16px"> Cash Flow (or Cash Income)</td>
+                <td class="column4"><div><p style="font-size: 16px">$ <span id="textcf1">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf1">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcfpv1">5000 </span> total, pv</td>
+                <td class="column5"><div><p style="font-size: 16px">$ <span id="textcf2">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf2">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcfpv2">5000 </span> total, pv</td>
+                <td class="column6"><div><p style="font-size: 16px">$ <span id="textcf3">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf3">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcfpv3">5000 </span> total, pv</td>
+                <td class="column7"><div><p style="font-size: 16px">$ <span id="textcf4">10000 </span> /year<div><p style="font-size: 16px">$ <span id="texttotcf4">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcfpv4">5000 </span> total, pv</td>
+            </tr>
+            <tr>
+              <td class="column3"><div><p style="font-size: 16px"> Cash Flow Breakeven Time (years)</td>
+              <td class="column4"><div><p style="font-size: 16px"><span id="textcfbe1">10 </span> years</td>
+              <td class="column5"><div><p style="font-size: 16px"><span id="textcfbe2">10 </span> years</td>
+              <td class="column6"><div><p style="font-size: 16px"><span id="textcfbe3">10 </span> years</td>
+              <td class="column7"><div><p style="font-size: 16px"><span id="textcfbe4">10 </span> years</td>
             </tr>
             <tr>
               <td class="column3"><div><p style="font-size: 16px"> Sales Proceeds (FV-MB)</td>
-              <td class="column4"><div><p style="font-size: 16px">$ <span id="textsp1">10000 </span> total</td>
-              <td class="column5"><div><p style="font-size: 16px">$ <span id="textsp2">10000 </span> total</td>
-              <td class="column6"><div><p style="font-size: 16px">$ <span id="textsp3">10000 </span> total</td>
-              <td class="column7"><div><p style="font-size: 16px">$ <span id="textsp4">10000 </span> total</td>
+              <td class="column4"><div><p style="font-size: 16px">$ <span id="textsp1">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="textsppv1">250000 </span> total, pv</td>
+              <td class="column5"><div><p style="font-size: 16px">$ <span id="textsp2">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="textsppv2">250000 </span> total, pv</td>
+              <td class="column6"><div><p style="font-size: 16px">$ <span id="textsp3">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="textsppv3">250000 </span> total, pv</td>
+              <td class="column7"><div><p style="font-size: 16px">$ <span id="textsp4">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="textsppv4">250000 </span> total, pv</td>
             </tr>
             <tr>
-              <td class="column3"><div><p style="font-size: 16px"> Cash Balance (end of investment period)</td>
-              <td class="column4"><div><p style="font-size: 16px">$ <span id="texttotcb1">10000 </span> total</td>
-              <td class="column5"><div><p style="font-size: 16px">$ <span id="texttotcb2">10000 </span> total</td>
-              <td class="column6"><div><p style="font-size: 16px">$ <span id="texttotcb3">10000 </span> total</td>
-              <td class="column7"><div><p style="font-size: 16px">$ <span id="texttotcb4">10000 </span> total</td>
+              <td class="column3"><div><p style="font-size: 16px"> Final Cash Position (or Cash Balance at end of investment period)</td>
+              <td class="column4"><div><p style="font-size: 16px">$ <span id="texttotcb1">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcbpv1">255000 </span> total, pv</td>
+              <td class="column5"><div><p style="font-size: 16px">$ <span id="texttotcb2">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcbpv2">255000 </span> total, pv</td>
+              <td class="column6"><div><p style="font-size: 16px">$ <span id="texttotcb3">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcbpv3">255000 </span> total, pv</td>
+              <td class="column7"><div><p style="font-size: 16px">$ <span id="texttotcb4">10000 </span> total, nominal<div><p style="font-size: 16px">$ <span id="texttotcbpv4">255000 </span> total, pv</td>
             </tr>
             <tr>
               <td class="column1" rowspan="2"><div><p style="font-size: 16px">[4] Cash on Cash (CoC)</td>
@@ -398,7 +421,7 @@
               <td class="column7"><div><p style="font-size: 16px"><span id="textcoc4_firstyear">30 </span> %</td>
             </tr>
             <tr>
-              <td class="column2"><div><p style="font-size: 16px"> Projection Method (end of investment period): Cash-on-cash return can also be used as a forecasting tool to set a target for projected total earnings and total expenses. The higher the better.</td>
+              <td class="column2"><div><p style="font-size: 16px"> Projection Method (end of investment period): Cash-on-cash return can also be used as a forecasting tool to set a target for projected total earnings (includes cash flow and sales proceeds) and total expenses. The higher the better.</td>
               <td class="column3"><div><p style="font-size: 16px"> Ideally >100%, otherwise need appreciation to see value in investment.</td>
               <td class="column4"><div><p style="font-size: 16px"><span id="textcoc1_invperiod">30 </span> %</td>
               <td class="column5"><div><p style="font-size: 16px"><span id="textcoc2_invperiod">30 </span> %</td>
@@ -415,8 +438,8 @@
               <td class="column7"><div><p style="font-size: 16px"><span id="textroe4_firstyear">30 </span> %</td>
             </tr>
             <tr>
-              <td class="column2"><div><p style="font-size: 16px"> Method 2 (end of investment period): Cash Flow ('income') divide by Sales Proceeds ('worth'). The higher the better.</td>
-              <td class="column3"><div><p style="font-size: 16px"> Infinity in this case means the future value has reduced to zero.</td>
+              <td class="column2"><div><p style="font-size: 16px"> Method 2 (end of investment period): Cash Flow ('income') divide by Sales Proceeds ('worth'). The higher the better.<p style="font-size: 16px; width: 400px">However, asset depreciation will diminish the 'worth', thereby increasing the RoE leading to false indication. In other words, 'infinity' can mean that the future value has reduced to zero. </td>
+              <td class="column3"><div><p style="font-size: 16px"> Therefore, this indicator is only useful if asset doesn't depreciate. Capped to 100% for this calculation so it doesn't look silly.</td>
               <td class="column4"><div><p style="font-size: 16px"><span id="textroe1_invperiod">30 </span> %</td>
               <td class="column5"><div><p style="font-size: 16px"><span id="textroe2_invperiod">30 </span> %</td>
               <td class="column6"><div><p style="font-size: 16px"><span id="textroe3_invperiod">30 </span> %</td>
@@ -424,7 +447,7 @@
             </tr>
             <tr>
               <td class="column1"><div><p style="font-size: 16px">[6] Return on Investment (ROI)</td>
-              <td class="column2"><div><p style="font-size: 16px"> Net Profit (in nominal terms; end of investment period) divide by Cash Invested. The higher the better.</td>
+              <td class="column2"><div><p style="font-size: 16px"> Net Profit (in nominal terms; end of investment period. Net profit includes monthly cashflow and capital gain) divide by Cash Invested (all expenses, acquisition/disposal costs, principle/interest and downpayment.). The higher the better.</td>
               <td class="column3"><div><p style="font-size: 16px"> XXX</td>
               <td class="column4"><div><p style="font-size: 16px"><span id="textroi1">5 </span> %</td>
               <td class="column5"><div><p style="font-size: 16px"><span id="textroi2">5 </span> %</td>
@@ -432,7 +455,7 @@
               <td class="column7"><div><p style="font-size: 16px"><span id="textroi4">5 </span> %</td>
             </tr>
             <tr>
-              <td class="column1"><div><p style="font-size: 16px">[7] Net Yield (Rental Yield)</td>
+              <td class="column1"><div><p style="font-size: 16px">[7] Net Yield (Net Rental Yield)</td>
               <td class="column2"><div><p style="font-size: 16px"> Income-generating capacity of a property.  NOI divide by purchase price (does not account for appreciation/depreciation). The higher the better.</td>
               <td class="column3"><div><p style="font-size: 16px"> XXX</td>
               <td class="column4"><div><p style="font-size: 16px"><span id="textry1">5 </span> %</td>
@@ -469,7 +492,7 @@
             </tr>
             <tr>
               <td class="column1"><div><p style="font-size: 16px">[11] Internal Rate of Return (IRR) </td>
-              <td class="column2"><div><p style="font-size: 16px"> IRR is the rate at which the present value of all expected future cash flows (including sales proceeds from capital gain) matches the initial investment amount (inc. all costs incurred and downpayment). The higher the discount rate wrt inflation, the better (i.e., preserving value and generates a  real growth), but must be higher than hurdle rate. In short, IRR is the rate at which I can tolerate my cash flow to be eroded by time, without losing my purchasing power.</td>
+              <td class="column2"><div><p style="font-size: 16px"> IRR is the tolerable discount rate at which the present value of all expected future cash flows (including sales proceeds from capital gain) matches the initial investment amount (inc. all costs incurred and downpayment). The higher the tolerable discount rate wrt inflation, the better (i.e., preserving value and generates a  real growth), but must be higher than hurdle rate. In short, IRR is the rate at which I can tolerate my cash flow to be eroded by time, without losing my purchasing power.</td>
               <td class="column3"><div><p style="font-size: 16px"> Investment period should be capped to loan tenure since any income after that will be mortgage free, hence requiring a separate calculation. <br>Note that hurdle rate is the minimum required discount rate to consider an investment viable/ attractive. Therefore, if irr is much higher than fixed deposit rate (opportunity cost), then it's attractive.</td>
               <td class="column4"><div><p style="font-size: 16px"><span id="textirr1">3 </span> %<div><p style="font-size: 16px"><span id="textirrnpv1"> </span></td>
               <td class="column5"><div><p style="font-size: 16px"><span id="textirr2">3 </span> %<div><p style="font-size: 16px"><span id="textirrnpv2"> </span></td>
@@ -491,7 +514,7 @@
 </datalist>
 <br>
 <p class="notes">
-  <br>Note 1: 
+  <br>Note 1: Above calculation good for constant income, up to end of loan tenure. For detailed calculations based on variable income/expenses, which will affect breakeven time, or overall outcome beyond loan tenure, refer to Spreadsheet Calculation.
 </p>
 <br>
 <br>
