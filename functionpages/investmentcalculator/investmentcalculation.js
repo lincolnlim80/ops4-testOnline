@@ -228,10 +228,10 @@ var op_roe1_invperiod = 30;
 var op_roe2_invperiod = 30;
 var op_roe3_invperiod = 30;
 var op_roe4_invperiod = 30;
-var op_roi1=5;
-var op_roi2=5;
-var op_roi3=5;
-var op_roi4=5;
+var op_ror1=5;
+var op_ror2=5;
+var op_ror3=5;
+var op_ror4=5;
 var op_cr1 = 30;
 var op_cr2 = 30;
 var op_cr3 = 30;
@@ -1105,9 +1105,9 @@ function recalcROE1_INVPERIOD() {
 }
 
 
-function recalcROI1() {
-  op_roi1 = ((op_totcf1 + (ip_fv1 - ip_purchaseprice1))  / ((ip_opex1+ip_finex1) * 12 * ip_invperiod1 + ip_totoneoffcash1)) * 100;
-  $("#textroi1").html(numberWithCommas(parseFloat(op_roi1).toFixed(1)));
+function recalcROR1() {
+  op_ror1 = ((op_totcf1 + (ip_fv1 - ip_purchaseprice1))  / ((ip_opex1+ip_finex1) * 12 * ip_invperiod1 + ip_totoneoffcash1)) * 100;
+  $("#textror1").html(numberWithCommas(parseFloat(op_ror1).toFixed(1)));
 }
 
 function recalcCR1() {
@@ -1197,7 +1197,7 @@ function recalcOutput1() {
   recalcCOC1_INVPERIOD();
   recalcROE1_FirstYear();
   recalcROE1_INVPERIOD();
-  recalcROI1();
+  recalcROR1();
   recalcCR1();
   recalcIRR1();
 }
@@ -1352,9 +1352,9 @@ function recalcROE2_INVPERIOD() {
   $("#textroe2_invperiod").html(numberWithCommas(parseFloat(op_roe2_invperiod).toFixed(1)));
 }
 
-function recalcROI2() {
-  op_roi2 = ((op_totcf2 + (ip_fv2 - ip_purchaseprice2))  / ((ip_opex2+ip_finex2) * 12 * ip_invperiod2  + ip_totoneoffcash2)) * 100;
-  $("#textroi2").html(numberWithCommas(parseFloat(op_roi2).toFixed(1)));
+function recalcROR2() {
+  op_ror2 = ((op_totcf2 + (ip_fv2 - ip_purchaseprice2))  / ((ip_opex2+ip_finex2) * 12 * ip_invperiod2  + ip_totoneoffcash2)) * 100;
+  $("#textror2").html(numberWithCommas(parseFloat(op_ror2).toFixed(1)));
 }
 
 function recalcCR2() {
@@ -1443,7 +1443,7 @@ function recalcOutput2() {
   recalcCOC2_INVPERIOD();
   recalcROE2_FirstYear();
   recalcROE2_INVPERIOD();
-  recalcROI2();
+  recalcROR2();
   recalcCR2();
   recalcIRR2();
 }
@@ -1596,9 +1596,9 @@ function recalcROE3_INVPERIOD() {
   $("#textroe3_invperiod").html(numberWithCommas(parseFloat(op_roe3_invperiod).toFixed(1)));
 }
 
-function recalcROI3() {
-  op_roi3 = ((op_totcf3 + (ip_fv3 - ip_purchaseprice3))  / ((ip_opex3 + ip_finex3) * 12 * ip_invperiod3  + ip_totoneoffcash3)) * 100;
-  $("#textroi3").html(numberWithCommas(parseFloat(op_roi3).toFixed(1)));
+function recalcROR3() {
+  op_ror3 = ((op_totcf3 + (ip_fv3 - ip_purchaseprice3))  / ((ip_opex3 + ip_finex3) * 12 * ip_invperiod3  + ip_totoneoffcash3)) * 100;
+  $("#textror3").html(numberWithCommas(parseFloat(op_ror3).toFixed(1)));
 }
 
 function recalcCR3() {
@@ -1687,7 +1687,7 @@ function recalcOutput3() {
   recalcCOC3_INVPERIOD();
   recalcROE3_FirstYear();
   recalcROE3_INVPERIOD();
-  recalcROI3();
+  recalcROR3();
   recalcCR3();
   recalcIRR3();
 }
@@ -1843,9 +1843,9 @@ function recalcROE4_INVPERIOD() {
   $("#textroe4_invperiod").html(numberWithCommas(parseFloat(op_roe4_invperiod).toFixed(1)));
 }
 
-function recalcROI4() {
-  op_roi4 = ((op_totcf4 + (ip_fv4 - ip_purchaseprice4))  / ((ip_opex4 + ip_finex4) * 12 * ip_invperiod4  + ip_totoneoffcash4)) * 100;
-  $("#textroi4").html(numberWithCommas(parseFloat(op_roi4).toFixed(1)));
+function recalcROR4() {
+  op_ror4 = ((op_totcf4 + (ip_fv4 - ip_purchaseprice4))  / ((ip_opex4 + ip_finex4) * 12 * ip_invperiod4  + ip_totoneoffcash4)) * 100;
+  $("#textror4").html(numberWithCommas(parseFloat(op_ror4).toFixed(1)));
 }
 
 function recalcCR4() {
@@ -1934,7 +1934,7 @@ function recalcOutput4() {
   recalcCOC4_INVPERIOD();
   recalcROE4_FirstYear();
   recalcROE4_INVPERIOD();
-  recalcROI4();
+  recalcROR4();
   recalcCR4();
   recalcIRR4();
 }
@@ -2584,17 +2584,17 @@ function compareMinMax(cell1, cell2, cell3, cell4, i) {
 
     if (i==12){
       // Compare the values and change the font color to green for the minimum and maximum
-      const maxValue = Math.max(op_roi1, op_roi2, op_roi3, op_roi4);
-      if (op_roi1 === maxValue) {
+      const maxValue = Math.max(op_ror1, op_ror2, op_ror3, op_ror4);
+      if (op_ror1 === maxValue) {
         cell1.style.color = 'green';
       }
-      if (op_roi2 === maxValue) {
+      if (op_ror2 === maxValue) {
         cell2.style.color = 'green';
       } 
-      if (op_roi3 === maxValue) {
+      if (op_ror3 === maxValue) {
         cell3.style.color = 'green';
       } 
-      if (op_roi4 === maxValue) {
+      if (op_ror4 === maxValue) {
         cell4.style.color = 'green';
       } 
     }
@@ -2809,7 +2809,7 @@ generateReportButton.addEventListener('click', () => {
                   ['[4] Cash on Cash (CoC) - Over Period', parseFloat(op_coc1_invperiod).toFixed(1), parseFloat(op_coc2_invperiod).toFixed(1), parseFloat(op_coc3_invperiod).toFixed(1), parseFloat(op_coc4_invperiod).toFixed(1)],
                   ['[5] Return on Equity (RoE) - 1st Year', parseFloat(op_roe1_firstyear).toFixed(1), parseFloat(op_roe2_firstyear).toFixed(1), parseFloat(op_roe3_firstyear).toFixed(1), parseFloat(op_roe4_firstyear).toFixed(1)],
                   ['[5] Return on Equity (RoE) - Over Period', parseFloat(op_roe1_invperiod).toFixed(1), parseFloat(op_roe2_invperiod).toFixed(1), parseFloat(op_roe3_invperiod).toFixed(1), parseFloat(op_roe4_invperiod).toFixed(1)],
-                  ['[6] Return on Investment (ROI)', parseFloat(op_roi1).toFixed(1), parseFloat(op_roi2).toFixed(1), parseFloat(op_roi3).toFixed(1), parseFloat(op_roi4).toFixed(1)],
+                  ['[6] Return on Investment (ROR)', parseFloat(op_ror1).toFixed(1), parseFloat(op_ror2).toFixed(1), parseFloat(op_ror3).toFixed(1), parseFloat(op_ror4).toFixed(1)],
                   ['[7] Net Yield (Rental Yield)', parseFloat(op_ry1).toFixed(1), parseFloat(op_ry2).toFixed(1), parseFloat(op_ry3).toFixed(1), parseFloat(op_ry4).toFixed(1)],
                   ['[8] Operating Expense Ratio (OER)', parseFloat(op_oer1).toFixed(1), parseFloat(op_oer2).toFixed(1), parseFloat(op_oer3).toFixed(1), parseFloat(op_oer4).toFixed(1)],
                   ['[9] Gross Income psf', parseFloat(op_gipsf1).toFixed(1), parseFloat(op_gipsf2).toFixed(1), parseFloat(op_gipsf3).toFixed(1), parseFloat(op_gipsf4).toFixed(1)],
